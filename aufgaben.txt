@@ -1,0 +1,12 @@
+Aufgaben:
+Design (Assets)
+Maps erstellen
+Maplogik, abbilden der Karte in der Spielumgebung
+Kollisionslogik/Bewegungslogik der Spielfigur in Verbindung mit Karte
+Fähigkeiten der Spielfigur, Feuerball
+Gegner
+Zeitlimit (?)
+Coins/Punkte
+Gui
+	Coins/Punkte
+	Fortschrittsanzeige
