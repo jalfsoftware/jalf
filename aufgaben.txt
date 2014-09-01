@@ -10,3 +10,29 @@ Coins/Punkte
 Gui
 	Coins/Punkte
 	Fortschrittsanzeige
+Menüstruktur (Screens)
+
+Grundlage:
+- Menüstruktur (Screens)
+	- Startbildschirm
+	- Levelauswahl
+	- Optionsmenü
+	- Spielscreen
+- eine Map (.tmx)
+- Maplogik (Map abbilden im Spiel)
+- Spielfigur (abstract class Entity)
+	- Bewegen
+- Kollisionsabfrage
+
+---------------------
+
+Unabhängig:
+- Gegner (auf Basis von Entity)
+	- KI (laufen, Nutzen von Fähigkeiten)
+- Fähigkeiten
+	- PowerUps
+- Erweiterung der Maplogik (context)
+	- Abstand von Entities zueinander
+	- Punktestand
+- GUI, Ingame-Interface
+- Design
