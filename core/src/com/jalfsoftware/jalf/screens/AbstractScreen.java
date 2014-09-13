@@ -15,23 +15,24 @@ import com.jalfsoftware.jalf.Jalf;
 /**
  * Created by Flaiker on 13.09.2014.
  */
+
+/**
+ * Basisklasse für Screens
+ */
 public abstract class AbstractScreen implements Screen {
     public static final String LOG = AbstractScreen.class.getSimpleName();
 
     protected static final float SCREEN_WIDTH  = 800;
     protected static final float SCREEN_HEIGHT = 480;
 
-    protected final Stage              uiStage;
-    protected final Skin               skin;
-    protected final Jalf               jalf;
-    protected final SpriteBatch        batch;
-    protected final OrthographicCamera camera;
+    protected final Stage              uiStage; // Stage zum Hosten von UI-Elementen
+    protected final Skin               skin; // Skin mit visueller Darstellung des UI
+    protected final Jalf               jalf; // Die aufrufende Spielinstanz
+    protected final SpriteBatch        batch; // Ein SpriteBatch zum Rendern der Stage
+    protected final OrthographicCamera camera; // Die Kamera als Perspektive auf das Spiel
 
-    private Label fpsLabel;
+    private Label fpsLabel; // FPS-Anzeige
 
-    /**
-     * Abstrakte Klasse für Screens
-     */
     public AbstractScreen(Jalf jalf) {
         this.jalf = jalf;
         uiStage = new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -42,6 +43,9 @@ public abstract class AbstractScreen implements Screen {
         this.fpsLabel = new Label("", skin, "arial", Color.WHITE);
     }
 
+    /**
+     * Name des abgeleiteten Screens
+     */
     protected abstract String getName();
 
     @Override
@@ -105,5 +109,8 @@ public abstract class AbstractScreen implements Screen {
         uiStage.draw();
     }
 
+    /**
+     * Wird vor dem UI gerendert, sodass dieses auf oberster Ebene erscheint
+     */
     protected abstract void preUIrender(float delta);
 }

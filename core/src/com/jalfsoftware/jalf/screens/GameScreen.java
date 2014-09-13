@@ -10,16 +10,21 @@ import com.jalfsoftware.jalf.Player;
  * Created by Flaiker on 13.09.2014.
  */
 public class GameScreen extends AbstractScreen {
-    private static final float UNITSCALE = 0.8f;
+    private static final float UNITSCALE = 0.8f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
 
     private OrthogonalTiledMapRenderer mapRenderer;
-    private Player           player;
+    private Player                     player;
 
     public GameScreen(Jalf jalf) {
         super(jalf);
+
+        // Maprenderer initialisieren
         TiledMap map = new TmxMapLoader().load("map1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, UNITSCALE);
+
+        // Spieler initialisieren
         player = new Player(UNITSCALE);
+        player.setPosition(0, 0);
     }
 
     @Override
@@ -30,12 +35,13 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void preUIrender(float delta) {
+        // Kamera auf Map setzen und Map rendern
         mapRenderer.setView(camera);
         mapRenderer.render();
 
         mapRenderer.getSpriteBatch().begin();
 
-        player.setPosition(0,0);
+        // Spieler rendern
         player.render(mapRenderer.getSpriteBatch());
 
         mapRenderer.getSpriteBatch().end();

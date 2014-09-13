@@ -15,7 +15,7 @@ import com.jalfsoftware.jalf.helper.DefaultActorListener;
 public class MenuScreen extends AbstractScreen {
     public static final String LOG = MenuScreen.class.getSimpleName();
 
-    private Table table;
+    private Table table; // Dient der Anordnung der Menüelemente
 
     public MenuScreen(Jalf jalf) {
         super(jalf);
@@ -49,7 +49,9 @@ public class MenuScreen extends AbstractScreen {
         });
         table.add(startGameButton).expand().fill().pad(100,100,100,100);
         table.row();
-/*
+
+        // TODO: Das hier alles aufräumen...
+        /*
         // register the button "Highscore"
         TextButton highscoreButton = new TextButton("HIGHSCORE", skin);
         highscoreButton.setColor(1,1,1,0.9f);

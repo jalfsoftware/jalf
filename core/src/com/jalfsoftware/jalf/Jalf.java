@@ -4,6 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.jalfsoftware.jalf.screens.MenuScreen;
 
+/**
+ * Einstiegsklasse für das Spiel
+ */
 public class Jalf extends Game {
     private static final String LOG = Jalf.class.getSimpleName();
 
@@ -40,6 +43,6 @@ public class Jalf extends Game {
         super.resize(width, height);
         Gdx.app.log(LOG, "Resizing game to: " + width + " x " + height);
 
-        if (getScreen() == null) setScreen(new MenuScreen(this));
+        if (getScreen() == null) setScreen(new MenuScreen(this)); // Bewirkt erste Screenauswahl
     }
 }
