@@ -22,17 +22,19 @@ Grundlage:
 - Maplogik (Map abbilden im Spiel)
 - Spielfigur (abstract class Entity)
 	- Bewegen
-- Kollisionsabfrage
+
+
 
 ---------------------
 
 Unabhängig:
-- Gegner (auf Basis von Entity)
-	- KI (laufen, Nutzen von Fähigkeiten)
+- Kollisionsabfrage Fabian
+- Gegner (auf Basis von Entity) Anton
+	- KI (laufen, Nutzen von Fähigkeiten) Anton
 - Fähigkeiten
 	- PowerUps
 - Erweiterung der Maplogik (context)
-	- Abstand von Entities zueinander
+	- Advanced Collsion - Abstand von Entities zueinander
 	- Punktestand
-- GUI, Ingame-Interface
-- Design
+- GUI, Ingame-Interface Jonathan
+- Design/Grafik Jonathan

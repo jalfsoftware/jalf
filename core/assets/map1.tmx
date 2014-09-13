@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="bgLayer" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt0rkNwDAMA0DDbfbfNxMECSD6Q6641qIo99ZaZ3vXg5mz3qTmre462c1Jd0j/s5E5K12l+x69Y/XdmVnTTs7+da9qJ6t3+Tv32It7AAAAAAAJN+geFGk=
+  </data>
+ </layer>
+ <layer name="mgLayer" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt08EJADAIBEG/Sf8FpwQjIviYgatguQgAAAAAgD+3OGad4phV7ZF9xp96qj2yz/hTjx676LGLHrs8F6YEnw==
+  </data>
+ </layer>
+ <layer name="fgLayer" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAYH0AAAQ==
+  </data>
+ </layer>
+</map>

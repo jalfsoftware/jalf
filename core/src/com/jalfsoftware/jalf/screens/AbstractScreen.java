@@ -37,9 +37,9 @@ public abstract class AbstractScreen implements Screen {
         uiStage = new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-        this.fpsLabel = new Label("", skin, "arial", Color.WHITE);
+        camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.fpsLabel = new Label("", skin, "arial", Color.WHITE);
     }
 
     protected abstract String getName();
