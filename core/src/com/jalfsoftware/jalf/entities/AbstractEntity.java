@@ -22,7 +22,7 @@ public abstract class AbstractEntity {
         sprite.draw(batch);
     }
 
-    private void setPosition(float x, float y) {
+    protected void setPosition(float x, float y) {
         sprite.setPosition(x, y);
     }
 

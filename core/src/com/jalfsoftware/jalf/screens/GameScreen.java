@@ -1,5 +1,6 @@
 package com.jalfsoftware.jalf.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -23,14 +24,15 @@ public class GameScreen extends AbstractScreen {
         mapRenderer = new OrthogonalTiledMapRenderer(map, UNITSCALE);
 
         // Spieler initialisieren
-        player = new Player(0,0,10,10);
+        player = new Player(0, 0, 10, 10, 2, 10);
+
+        Gdx.input.setInputProcessor(player);
     }
 
     @Override
     public void show() {
         super.show();
     }
-
 
     @Override
     public void preUIrender(float delta) {
