@@ -81,9 +81,4 @@ public class OptionsScreen extends AbstractScreen {
     protected String getName() {
         return OptionsScreen.class.getSimpleName();
     }
-
-    @Override
-    protected void preUIrender(float delta) {
-
-    }
 }

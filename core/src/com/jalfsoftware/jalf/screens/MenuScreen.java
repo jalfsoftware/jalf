@@ -91,9 +91,4 @@ public class MenuScreen extends AbstractScreen {
     protected String getName() {
         return MenuScreen.class.getSimpleName();
     }
-
-    @Override
-    protected void preUIrender(float delta) {
-
-    }
 }

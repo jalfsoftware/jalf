@@ -114,5 +114,5 @@ public abstract class AbstractScreen implements Screen {
     /**
      * Wird vor dem UI gerendert, sodass dieses auf oberster Ebene erscheint
      */
-    protected abstract void preUIrender(float delta);
+    protected void preUIrender(float delta) {}
 }
