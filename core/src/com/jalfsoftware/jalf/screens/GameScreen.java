@@ -4,13 +4,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.jalfsoftware.jalf.Jalf;
-import com.jalfsoftware.jalf.Player;
+import com.jalfsoftware.jalf.entities.Player;
 
 /**
  * Created by Flaiker on 13.09.2014.
  */
 public class GameScreen extends AbstractScreen {
-    private static final float UNITSCALE = 0.8f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
+    public static final float UNITSCALE = 0.8f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
 
     private OrthogonalTiledMapRenderer mapRenderer;
     private Player                     player;
@@ -23,8 +23,7 @@ public class GameScreen extends AbstractScreen {
         mapRenderer = new OrthogonalTiledMapRenderer(map, UNITSCALE);
 
         // Spieler initialisieren
-        player = new Player(UNITSCALE);
-        player.setPosition(0, 0);
+        player = new Player(0,0,10,10);
     }
 
     @Override
