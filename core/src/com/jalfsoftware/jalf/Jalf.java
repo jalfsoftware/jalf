@@ -3,6 +3,7 @@ package com.jalfsoftware.jalf;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.jalfsoftware.jalf.screens.MenuScreen;
+import com.jalfsoftware.jalf.services.PreferencesManager;
 
 /**
  * Einstiegsklasse für das Spiel
@@ -10,9 +11,18 @@ import com.jalfsoftware.jalf.screens.MenuScreen;
 public class Jalf extends Game {
     private static final String LOG = Jalf.class.getSimpleName();
 
+    // Services
+    private PreferencesManager preferencesManager;
+
+    public PreferencesManager getPreferencesManager() {
+        return preferencesManager;
+    }
+
     @Override
     public void create() {
         Gdx.app.log(LOG, "Creating game on " + Gdx.app.getType());
+
+        preferencesManager = new PreferencesManager();
     }
 
     @Override

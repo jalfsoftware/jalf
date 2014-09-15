@@ -61,7 +61,7 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                //jalf.setScreen(new OptionsScreen(jalf));
+                jalf.setScreen(new OptionsScreen(jalf));
             }
         });
         table.add(optionsButton).expand().fill().pad(0, 150, 25, 150);

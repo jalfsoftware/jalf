@@ -51,10 +51,12 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void show() {
         Gdx.app.log(LOG, "Showing screen: " + getName());
+
         //FPS Label
         fpsLabel.setFontScale(0.5f);
         fpsLabel.setPosition(uiStage.getWidth() - fpsLabel.getPrefWidth(), uiStage.getHeight() - fpsLabel.getHeight());
-        uiStage.addActor(fpsLabel);
+        if (jalf.getPreferencesManager().isFpsCounterEnabled()) uiStage.addActor(fpsLabel);
+
     }
 
     @Override
