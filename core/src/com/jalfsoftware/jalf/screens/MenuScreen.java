@@ -30,16 +30,20 @@ public class MenuScreen extends AbstractScreen {
         uiStage.addActor(table);
 
         table.add().padBottom(50).row();
-        Label titleLabel = new Label("J4F", skin, "digital7-92", Color.WHITE);
+
+        // Titel
+        Label titleLabel = new Label("tbn", skin, "digital7-92", Color.WHITE);
         //titleLabel.setFontScale(2);
         table.add(titleLabel).spaceBottom(5).align(1);
         table.row();
-        table.add("Jump 4 Fun").align(1).spaceBottom(20);
+
+        // Untertitel
+        table.add("[insertGameNameHere]").align(1).spaceBottom(20);
         table.row();
 
-        // register the button "Start"
+        // Button "Start"
         TextButton startGameButton = new TextButton("START", skin);
-        startGameButton.setColor(1,1,1,0.9f);
+        startGameButton.setColor(1, 1, 1, 0.9f);
         startGameButton.addListener(new DefaultActorListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -47,37 +51,38 @@ public class MenuScreen extends AbstractScreen {
                 jalf.setScreen(new GameScreen(jalf));
             }
         });
-        table.add(startGameButton).expand().fill().pad(100,100,100,100);
+        table.add(startGameButton).expand().fill().pad(0, 150, 25, 150);
         table.row();
 
-        // TODO: Das hier alles aufräumen...
-        /*
-        // register the button "Highscore"
-        TextButton highscoreButton = new TextButton("HIGHSCORE", skin);
-        highscoreButton.setColor(1,1,1,0.9f);
-        highscoreButton.addListener(new DefaultActorListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                //game.setScreen(new HighscoreScreen(game,demoGame, skin));
-            }
-        });
-        table.add(highscoreButton).expand().fill().pad(0, 100, 100, 100);
-        table.row();
-
-        // register the button "Options"
+        // Button "Options"
         TextButton optionsButton = new TextButton("OPTIONS", skin);
-        optionsButton.setColor(1,1,1,0.9f);
+        optionsButton.setColor(1, 1, 1, 0.9f);
         optionsButton.addListener(new DefaultActorListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                //game.setScreen(new OptionsScreen(game));
+                //jalf.setScreen(new OptionsScreen(jalf));
             }
         });
-        table.add(optionsButton).expand().fill().pad(0,100,100,100).row();*/
+        table.add(optionsButton).expand().fill().pad(0, 150, 25, 150);
+        table.row();
 
-        table.add(new Label("www.jalfsoftware.com",skin));
+        // Button "Exit"
+        TextButton exitButton = new TextButton("EXIT", skin);
+        exitButton.setColor(1, 1, 1, 0.9f);
+        exitButton.addListener(new DefaultActorListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                Gdx.app.exit();
+            }
+        });
+        table.add(exitButton).expand().fill().pad(0, 150, 25, 150);
+        table.row();
+
+        // Footer
+        table.add(new Label("www.jalfsoftware.com", skin)).row();
+        table.add().padBottom(25).row();
 
         Gdx.input.setInputProcessor(uiStage);
     }
