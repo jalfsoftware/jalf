@@ -75,7 +75,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     /**
-     * Konvertiert eine Map-Position zu einer Screen-Position (1LE=1Tile)
+     * Konvertiert eine Map-Position zu einer Screen-Position (1LE=1Pixel)
      */
     public Vector2 convertToScreenPosition(Vector2 mapPosition) {
         return new Vector2((mapPosition.x * collisionLayer.getTileWidth()) * UNITSCALE,
