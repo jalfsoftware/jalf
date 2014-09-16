@@ -11,7 +11,7 @@ import com.jalfsoftware.jalf.entities.Player;
  * Created by Flaiker on 13.09.2014.
  */
 public class GameScreen extends AbstractScreen {
-    public static final float UNITSCALE = 0.8f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
+    public static final float UNITSCALE = 0.75f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
 
     private OrthogonalTiledMapRenderer mapRenderer;
     private Player                     player;
