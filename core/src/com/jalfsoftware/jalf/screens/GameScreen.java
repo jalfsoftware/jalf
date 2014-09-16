@@ -61,6 +61,9 @@ public class GameScreen extends AbstractScreen {
         return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
     }
 
+    /**
+     * Konvertiert eine Screen-Position zu einer Mapposition (1LE=1Tile)
+     */
     public Vector2 convertToMapPosition(Vector2 screenPosition) {
         return new Vector2((screenPosition.x / collisionLayer.getTileWidth()) / UNITSCALE,
                            (screenPosition.y / collisionLayer.getTileHeight()) / UNITSCALE);
