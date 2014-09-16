@@ -1,16 +1,18 @@
 package com.jalfsoftware.jalf.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
+import com.jalfsoftware.jalf.screens.GameScreen;
 
 /**
  * Die vom Spieler steuerbare Figur
  */
 public class Player extends AbstractLivingEntity implements InputProcessor {
 
-    public Player(float xPos, float yPos, int currentHealth, int maxHealth, float acceleration, float maxSpeed) {
-        super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed);
+    public Player(float xPos, float yPos, int currentHealth, int maxHealth, float acceleration, float maxSpeed, GameScreen gameScreen) {
+        super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, gameScreen);
     }
 
     @Override
@@ -43,8 +45,14 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
             case Input.Keys.RIGHT:
             case Input.Keys.D:
                 // Aufhören zu bewegen, wenn Taste losgelassen
-                // TODO: Bug, hört auf zu bewegen wenn zwei Tasten gleichzeitig gedrückt sind und eine losgelassen wird
-                move(Direction.NONE);
+                if (!(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT) ||
+                      Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))) move(Direction.NONE);
+
+                if ((keycode == Input.Keys.LEFT || keycode == Input.Keys.A) &&
+                    (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || keycode == Input.Keys.D)) move(Direction.RIGHT);
+
+                if ((keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) &&
+                    (Gdx.input.isKeyPressed(Input.Keys.LEFT) || keycode == Input.Keys.A)) move(Direction.LEFT);
                 keyProcessed = true;
                 break;
         }

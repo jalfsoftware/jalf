@@ -3,6 +3,8 @@ package com.jalfsoftware.jalf.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
+import com.jalfsoftware.jalf.screens.GameScreen;
 
 /**
  * Erweitert AbstractEntity um Lebenspunkte, Beschleunigung, Maximalgeschwindigkeit, Bewegung
@@ -20,8 +22,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     private Direction requestedDirection;
 
     public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxHealth, float acceleration,
-                                float maxSpeed) {
-        super(xPos, yPos, texture);
+                                float maxSpeed, GameScreen gameScreen) {
+        super(xPos, yPos, texture, gameScreen);
         this.maxHealth = maxHealth;
         this.currentHealth = currentHealth;
 
@@ -61,8 +63,17 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
             }
         }
 
-        // Position ändern
-        setPosition(getX() + currentSpeed, getY());
+        // Neue Position
+        Vector2 newPosition = new Vector2(getX() + currentSpeed, getY());
+
+        // Neue Mapposition
+        Vector2 newMapPosition = gameScreen.convertToMapPosition(newPosition);
+
+        // Position ändern, wenn keine Kollision
+        //if (!gameScreen.isPositionBlocked((int)newPosition.x,(int)newPosition.y))
+        Gdx.app.log(LOG, "Neue Position:" + (int) newMapPosition.x + "|" + (int) newMapPosition.y + " Ist blockiert: " +
+                         gameScreen.isPositionBlocked((int) newMapPosition.x, (int) newMapPosition.y));
+        setPosition(newPosition.x, newPosition.y);
 
     }
 
@@ -72,7 +83,6 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
     public void move(Direction direction) {
         requestedDirection = direction;
-        //if (direction == Direction.NONE) currentSpeed = 0;
     }
 
     public int getCurrentHealth() {
