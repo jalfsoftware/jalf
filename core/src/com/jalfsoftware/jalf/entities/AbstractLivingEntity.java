@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
  * Erweitert AbstractEntity um Lebenspunkte, Beschleunigung, Maximalgeschwindigkeit, Bewegung
  */
 public abstract class AbstractLivingEntity extends AbstractEntity {
+    public static final String LOG = AbstractLivingEntity.class.getSimpleName();
+
     protected int currentHealth;
     protected int maxHealth;
 
@@ -15,40 +17,53 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     protected float maxSpeed;
     protected float currentSpeed;
 
-    private Direction currentDirection;
+    private Direction requestedDirection;
 
-    public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxhealth, float acceleration,
+    public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxHealth, float acceleration,
                                 float maxSpeed) {
         super(xPos, yPos, texture);
-        this.maxHealth = maxhealth;
+        this.maxHealth = maxHealth;
         this.currentHealth = currentHealth;
 
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
 
         currentSpeed = 0;
-        currentDirection = Direction.NONE;
+        requestedDirection = Direction.NONE;
     }
 
     @Override
     public void render(Batch batch) {
         super.render(batch);
 
-        // Bewegung der Entity
-        // TODO: Deacceleration und Trennung der aktuellen Geschwindigkeit nach Richtung
         float delta = Gdx.graphics.getDeltaTime();
 
-        currentSpeed += acceleration * delta;
-        if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
-
-        switch (currentDirection) {
+        // Beschleunigen
+        switch (requestedDirection) {
             case LEFT:
-                setPosition(getX() - currentSpeed, getY());
+                currentSpeed -= acceleration * delta;
+                if (currentSpeed < -maxSpeed) currentSpeed = -maxSpeed;
                 break;
             case RIGHT:
-                setPosition(getX() + currentSpeed, getY());
+                currentSpeed += acceleration * delta;
+                if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
                 break;
         }
+
+        // Verlangsamen
+        if (requestedDirection == Direction.NONE && Math.abs(currentSpeed) > 0) {
+            if (currentSpeed > 0) {
+                currentSpeed -= acceleration * delta;
+                if (currentSpeed < 0) currentSpeed = 0;
+            } else {
+                currentSpeed += acceleration * delta;
+                if (currentSpeed > 0) currentSpeed = 0;
+            }
+        }
+
+        // Position ändern
+        setPosition(getX() + currentSpeed, getY());
+
     }
 
     public void takeDamage(int damage) {
@@ -56,8 +71,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     }
 
     public void move(Direction direction) {
-        currentDirection = direction;
-        if (direction == Direction.NONE) currentSpeed = 0;
+        requestedDirection = direction;
+        //if (direction == Direction.NONE) currentSpeed = 0;
     }
 
     public int getCurrentHealth() {

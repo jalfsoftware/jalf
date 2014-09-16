@@ -24,7 +24,7 @@ public class GameScreen extends AbstractScreen {
         mapRenderer = new OrthogonalTiledMapRenderer(map, UNITSCALE);
 
         // Spieler initialisieren
-        player = new Player(0, 0, 10, 10, 2, 10);
+        player = new Player(0, 0, 10, 10, 10, 5);
 
         Gdx.input.setInputProcessor(player);
     }
