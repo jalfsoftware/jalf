@@ -20,13 +20,17 @@ public class GameScreen extends AbstractScreen {
     private TiledMap                   currentMap;
     private TiledMapTileLayer          collisionLayer;
 
+    // Map-Strings
+    private static final String TILE_BLOCKED_KEY     = "blocked";
+    private static final String COLLISION_LAYER_NAME = "mgLayer";
+
     public GameScreen(Jalf jalf) {
         super(jalf);
 
         // Maprenderer initialisieren
-        TiledMap currentMap = new TmxMapLoader().load("map1.tmx");
+        currentMap = new TmxMapLoader().load("map1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(currentMap, UNITSCALE);
-        collisionLayer = (TiledMapTileLayer) currentMap.getLayers().get("mgLayer");
+        collisionLayer = (TiledMapTileLayer) currentMap.getLayers().get(COLLISION_LAYER_NAME);
 
         // Spieler initialisieren
         player = new Player(0, 0, 10, 10, 10, 5, this);
@@ -58,7 +62,7 @@ public class GameScreen extends AbstractScreen {
      */
     public boolean isPositionBlocked(int x, int y) {
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
-        return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
+        return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_BLOCKED_KEY);
     }
 
     /**
