@@ -59,7 +59,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     /**
-     * Prüft, ob das Tile in mgLayer an der übergebenen Position auf der Map blockiert ist (Kollisionsabfrage)
+     * Prüft, ob das Tile im Kollisionslayer an der übergebenen Position auf der Map blockiert ist (Kollisionsabfrage)
      */
     public boolean isPositionBlocked(int x, int y) {
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
