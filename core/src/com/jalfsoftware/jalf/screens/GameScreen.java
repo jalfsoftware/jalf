@@ -33,7 +33,8 @@ public class GameScreen extends AbstractScreen {
         collisionLayer = (TiledMapTileLayer) currentMap.getLayers().get(COLLISION_LAYER_NAME);
 
         // Spieler initialisieren
-        player = new Player(0, 0, 10, 10, 10, 5, this);
+        Vector2 spawnPosition = convertToScreenPosition(new Vector2(3, 7));
+        player = new Player(spawnPosition.x, spawnPosition.y, 10, 10, 10, 5, this);
 
         Gdx.input.setInputProcessor(player);
     }
@@ -66,11 +67,19 @@ public class GameScreen extends AbstractScreen {
     }
 
     /**
-     * Konvertiert eine Screen-Position zu einer Mapposition (1LE=1Tile)
+     * Konvertiert eine Screen-Position zu einer Map-Position (1LE=1Tile)
      */
     public Vector2 convertToMapPosition(Vector2 screenPosition) {
         return new Vector2((screenPosition.x / collisionLayer.getTileWidth()) / UNITSCALE,
                            (screenPosition.y / collisionLayer.getTileHeight()) / UNITSCALE);
+    }
+
+    /**
+     * Konvertiert eine Map-Position zu einer Screen-Position (1LE=1Tile)
+     */
+    public Vector2 convertToScreenPosition(Vector2 mapPosition) {
+        return new Vector2((mapPosition.x * collisionLayer.getTileWidth()) * UNITSCALE,
+                           (mapPosition.y * collisionLayer.getTileHeight()) * UNITSCALE);
     }
 
     @Override

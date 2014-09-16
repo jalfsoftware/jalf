@@ -70,10 +70,16 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         Vector2 newMapPosition = gameScreen.convertToMapPosition(newPosition);
 
         // Position ändern, wenn keine Kollision
-        //if (!gameScreen.isPositionBlocked((int)newPosition.x,(int)newPosition.y))
-        Gdx.app.log(LOG, "Neue Position:" + (int) newMapPosition.x + "|" + (int) newMapPosition.y + " Ist blockiert: " +
-                         gameScreen.isPositionBlocked((int) newMapPosition.x, (int) newMapPosition.y));
-        setPosition(newPosition.x, newPosition.y);
+        boolean newPositionBlocked = false;
+        if (currentSpeed > 0) {
+            newPositionBlocked = gameScreen.isPositionBlocked((int) (newMapPosition.x + 1), (int) newMapPosition.y);
+        } else if (currentSpeed < 0) {
+            newPositionBlocked = gameScreen.isPositionBlocked((int) (newMapPosition.x), (int) newMapPosition.y);
+        }
+        /*Gdx.app.log(LOG, "Neue Position:" + (int) newMapPosition.x + "|" + (int) newMapPosition.y + " Ist blockiert: " +
+                         newPositionBlocked);*/
+        if (!newPositionBlocked) setPosition(newPosition.x, newPosition.y);
+        else currentSpeed = 0;
 
     }
 

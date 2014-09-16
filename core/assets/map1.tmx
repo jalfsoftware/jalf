@@ -7,6 +7,11 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
   <tile id="8">
    <properties>
     <property name="blocked" value=""/>
@@ -25,7 +30,7 @@
  </layer>
  <layer name="mgLayer" width="100" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt08EJADAIBEG/Sf8FpwQjIviYgatguQgAAAAAgD+3OGad4phV7ZF9xp96qj2yz/hTjx676LGLHrs8F6YEnw==
+   eJzt07EJACAQBEHBSPsv2BLkUfGCGfjss+VaAwAAAH7rl364Q48semSZxeOtUTzeqvbYbcaezlR77DZjT2f0yKJHFj2yLBORBLE=
   </data>
  </layer>
  <layer name="fgLayer" width="100" height="20">
