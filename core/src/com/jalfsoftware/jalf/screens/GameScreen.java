@@ -8,7 +8,7 @@ import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.Player;
 
 /**
- * Created by Flaiker on 13.09.2014.
+ * Screen zur Darstellung des Spiels
  */
 public class GameScreen extends AbstractScreen {
     public static final float UNITSCALE = 0.75f; // Skalierungskonstante für die Darstellung von Maps und Entitäten

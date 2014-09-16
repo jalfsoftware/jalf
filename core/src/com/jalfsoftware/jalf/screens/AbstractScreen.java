@@ -13,10 +13,6 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.jalfsoftware.jalf.Jalf;
 
 /**
- * Created by Flaiker on 13.09.2014.
- */
-
-/**
  * Basisklasse für Screens
  */
 public abstract class AbstractScreen implements Screen {

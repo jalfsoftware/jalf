@@ -10,7 +10,7 @@ import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.helper.DefaultActorListener;
 
 /**
- * Created by Flaiker on 13.09.2014.
+ * Screen zur Darstellung des Einstiegmenüs
  */
 public class MenuScreen extends AbstractScreen {
     public static final String LOG = MenuScreen.class.getSimpleName();

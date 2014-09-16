@@ -13,7 +13,7 @@ import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.helper.DefaultActorListener;
 
 /**
- * Created by Flaiker on 15.09.2014.
+ * Screen für das Optionsmenü
  */
 public class OptionsScreen extends AbstractScreen {
     public static final String LOG = OptionsScreen.class.getSimpleName();
