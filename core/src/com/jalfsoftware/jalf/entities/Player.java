@@ -11,8 +11,9 @@ import com.jalfsoftware.jalf.screens.GameScreen;
  */
 public class Player extends AbstractLivingEntity implements InputProcessor {
 
-    public Player(float xPos, float yPos, int currentHealth, int maxHealth, float acceleration, float maxSpeed, GameScreen gameScreen) {
-        super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, gameScreen);
+    public Player(float xPos, float yPos, int currentHealth, int maxHealth, float acceleration, float maxSpeed, float jumpSpeed,
+                  GameScreen gameScreen) {
+        super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
     }
 
     @Override
@@ -30,6 +31,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
             case Input.Keys.D:
                 move(Direction.RIGHT);
                 keyProcessed = true;
+                break;
+            case Input.Keys.SPACE:
+                jump();
                 break;
         }
         return keyProcessed;

@@ -15,22 +15,28 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     protected int currentHealth;
     protected int maxHealth;
 
-    protected float acceleration;
-    protected float maxSpeed;
-    protected float currentSpeed;
+    protected float   acceleration;
+    protected float   maxSpeed;
+    protected float   jumpSpeed;
+    protected Vector2 currentSpeed;
+
+    private int jumpCount;
 
     private Direction requestedDirection;
 
     public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxHealth, float acceleration,
-                                float maxSpeed, GameScreen gameScreen) {
+                                float maxSpeed, float jumpSpeed, GameScreen gameScreen) {
         super(xPos, yPos, texture, gameScreen);
         this.maxHealth = maxHealth;
         this.currentHealth = currentHealth;
 
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
+        this.jumpSpeed = jumpSpeed;
 
-        currentSpeed = 0;
+        jumpCount = 0;
+        currentSpeed = new Vector2(0, 0);
+
         requestedDirection = Direction.NONE;
     }
 
@@ -40,46 +46,63 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
         float delta = Gdx.graphics.getDeltaTime();
 
+        // TODO: Alles aufräumen!
+        // X-Achse
         // Beschleunigen
         switch (requestedDirection) {
             case LEFT:
-                currentSpeed -= acceleration * delta;
-                if (currentSpeed < -maxSpeed) currentSpeed = -maxSpeed;
+                currentSpeed.x -= acceleration * delta;
+                if (currentSpeed.x < -maxSpeed) currentSpeed.x = -maxSpeed;
                 break;
             case RIGHT:
-                currentSpeed += acceleration * delta;
-                if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
+                currentSpeed.x += acceleration * delta;
+                if (currentSpeed.x > maxSpeed) currentSpeed.x = maxSpeed;
                 break;
         }
 
         // Verlangsamen
-        if (requestedDirection == Direction.NONE && Math.abs(currentSpeed) > 0) {
-            if (currentSpeed > 0) {
-                currentSpeed -= acceleration * delta;
-                if (currentSpeed < 0) currentSpeed = 0;
+        if (requestedDirection == Direction.NONE && Math.abs(currentSpeed.x) > 0) {
+            if (currentSpeed.x > 0) {
+                currentSpeed.x -= acceleration * delta;
+                if (currentSpeed.x < 0) currentSpeed.x = 0;
             } else {
-                currentSpeed += acceleration * delta;
-                if (currentSpeed > 0) currentSpeed = 0;
+                currentSpeed.x += acceleration * delta;
+                if (currentSpeed.x > 0) currentSpeed.x = 0;
             }
         }
 
+        // Y-Achse
+        currentSpeed.y -= GameScreen.GRAVITATION_CONSTANT;
+        Vector2 newPositionY = new Vector2(getX(), getY() + currentSpeed.y);
+        Vector2 newMapPositionY = gameScreen.convertToMapPosition(newPositionY);
+
+        boolean newPositionBlockedY = gameScreen.isPositionBlocked((int) newMapPositionY.x, (int) newMapPositionY.y) ||
+                                      gameScreen.isPositionBlocked((int) newMapPositionY.x + 1, (int) newMapPositionY.y);
+
+        if (newPositionBlockedY) {
+            currentSpeed.y = 0;
+            jumpCount = 0;
+        }
+
         // Neue Position
-        Vector2 newPosition = new Vector2(getX() + currentSpeed, getY());
+        Vector2 newPosition = new Vector2(getX() + currentSpeed.x, getY());
 
         // Neue Mapposition
         Vector2 newMapPosition = gameScreen.convertToMapPosition(newPosition);
 
         // Position ändern, wenn keine Kollision
-        boolean newPositionBlocked = false;
-        if (currentSpeed > 0) {
-            newPositionBlocked = gameScreen.isPositionBlocked((int) (newMapPosition.x + 1), (int) newMapPosition.y);
-        } else if (currentSpeed < 0) {
-            newPositionBlocked = gameScreen.isPositionBlocked((int) (newMapPosition.x), (int) newMapPosition.y);
+        boolean newPositionBlockedX = false;
+        if (currentSpeed.x > 0) {
+            newPositionBlockedX = gameScreen.isPositionBlocked((int) (newMapPosition.x + 1), (int) newMapPosition.y);
+        } else if (currentSpeed.x < 0) {
+            newPositionBlockedX = gameScreen.isPositionBlocked((int) (newMapPosition.x), (int) newMapPosition.y);
         }
         /*Gdx.app.log(LOG, "Neue Position:" + (int) newMapPosition.x + "|" + (int) newMapPosition.y + " Ist blockiert: " +
-                         newPositionBlocked);*/
-        if (!newPositionBlocked) setPosition(newPosition.x, newPosition.y);
-        else currentSpeed = 0;
+                         newPositionBlockedX);*/
+        if (!newPositionBlockedX) setPosition(newPosition.x, newPosition.y);
+        else currentSpeed.x = 0;
+
+        setPosition(getX(), getY() + currentSpeed.y);
 
     }
 
@@ -87,8 +110,15 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         currentHealth -= damage;
     }
 
-    public void move(Direction direction) {
+    protected void move(Direction direction) {
         requestedDirection = direction;
+    }
+
+    protected void jump() {
+        if (jumpCount < 2) {
+            jumpCount++;
+            currentSpeed.y = jumpSpeed;
+        }
     }
 
     public int getCurrentHealth() {
@@ -111,8 +141,12 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         return maxSpeed;
     }
 
-    public float getCurrentSpeed() {
+    public Vector2 getcurrentSpeed() {
         return currentSpeed;
+    }
+
+    public void applyGravity(float delta) {
+        setPosition(getX(), getY() - GameScreen.GRAVITATION_CONSTANT * delta);
     }
 
     public static enum Direction {

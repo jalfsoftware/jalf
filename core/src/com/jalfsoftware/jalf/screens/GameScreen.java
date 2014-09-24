@@ -7,18 +7,25 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.jalfsoftware.jalf.Jalf;
+import com.jalfsoftware.jalf.entities.AbstractEntity;
 import com.jalfsoftware.jalf.entities.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Screen zur Darstellung des Spiels
  */
 public class GameScreen extends AbstractScreen {
-    public static final float UNITSCALE = 0.75f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
+    public static final float UNITSCALE            = 0.75f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
+    public static final float GRAVITATION_CONSTANT = 0.2f;
 
     private OrthogonalTiledMapRenderer mapRenderer;
     private Player                     player;
     private TiledMap                   currentMap;
     private TiledMapTileLayer          collisionLayer;
+
+    private List<AbstractEntity> entityList;
 
     // Map-Strings
     private static final String TILE_BLOCKED_KEY     = "blocked";
@@ -30,11 +37,16 @@ public class GameScreen extends AbstractScreen {
         // Maprenderer initialisieren
         currentMap = new TmxMapLoader().load("map1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(currentMap, UNITSCALE);
-        collisionLayer = (TiledMapTileLayer) currentMap.getLayers().get(COLLISION_LAYER_NAME);
+        collisionLayer = (TiledMapTileLayer) currentMap.getLayers()
+                                                       .get(COLLISION_LAYER_NAME);
 
         // Spieler initialisieren
-        Vector2 spawnPosition = convertToScreenPosition(new Vector2(3, 7));
-        player = new Player(spawnPosition.x, spawnPosition.y, 10, 10, 10, 5, this);
+        Vector2 spawnPosition = convertToScreenPosition(new Vector2(3, 12));
+        player = new Player(spawnPosition.x, spawnPosition.y, 10, 10, 20, 5, 5, this);
+
+        // Gegnerliste initialisieren
+        entityList = new ArrayList<AbstractEntity>();
+
 
         Gdx.input.setInputProcessor(player);
     }
@@ -50,12 +62,14 @@ public class GameScreen extends AbstractScreen {
         mapRenderer.setView(camera);
         mapRenderer.render();
 
-        mapRenderer.getSpriteBatch().begin();
+        mapRenderer.getSpriteBatch()
+                   .begin();
 
         // Spieler rendern
         player.render(mapRenderer.getSpriteBatch());
 
-        mapRenderer.getSpriteBatch().end();
+        mapRenderer.getSpriteBatch()
+                   .end();
     }
 
     /**
@@ -63,7 +77,9 @@ public class GameScreen extends AbstractScreen {
      */
     public boolean isPositionBlocked(int x, int y) {
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
-        return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_BLOCKED_KEY);
+        return cell != null && cell.getTile() != null && cell.getTile()
+                                                             .getProperties()
+                                                             .containsKey(TILE_BLOCKED_KEY);
     }
 
     /**
