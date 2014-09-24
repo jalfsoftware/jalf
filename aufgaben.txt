@@ -15,7 +15,6 @@ Menüstruktur (Screens)
 Grundlage:
 - Menüstruktur (Screens)
 	- Startbildschirm
-	- Levelauswahl
 	- Optionsmenü
 	- Spielscreen
 - eine Map (.tmx)
@@ -38,3 +37,35 @@ Unabhängig:
 	- Punktestand
 - GUI, Ingame-Interface Jonathan
 - Design/Grafik Jonathan
+
+----------------------
+Neue Aufgabenverteilung (24.09.2014):
+
+Fabian:
+Levelauswahlscreen, variables Laden von Leveln (Logik für Zeit etc.)
+Beziehung zwischen Maptiles und Spielerphysik (Eis -> langsamerer Beschleunigung)
+Leitern in der Map -> Klettern der Spielfigur
+
+Jonathan:
+Ingame-UI (Zeit, Punkte, Fähigkeiten, Menü, ...)
+Grafik/Design
+	Spieler (+Animationen)
+	Gegner (+Animationen)
+	Maptilesets (Wald, Eis, Jungel, ...)
+	Items
+	OutOfGame-UI (Menü)
+
+Anton:
+Gegner -> KI
+Interaktion zwischen Gegner und Spieler
+
+Lukas:
+Fähigkeiten für Spieler und Gegner
+	Feuerball
+	Unverwundbarkeit
+	Geschwindigkeitsboots
+	Sprunghöhe (/Doppelsprung)
+	...
+Items zum Freischalten von Fähigkeiten und Wiederherstellen von Leben etc.
+
+Alle: Mapdesign
