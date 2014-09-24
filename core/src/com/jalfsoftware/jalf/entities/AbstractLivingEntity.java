@@ -76,8 +76,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
         // Kollision
         // Herausfinden, ob neue Position blockiert ist
-        boolean blockedX = false;
-        boolean blockedY = false;
+        boolean blockedX;
+        boolean blockedY;
 
         // X
         Vector2 newPositionX = new Vector2(getX() + currentSpeed.x, getY());
@@ -86,6 +86,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
             blockedX = gameScreen.isPositionBlocked((int) (newMapPositionX.x + 1), (int) newMapPositionX.y);
         } else if (currentSpeed.x < 0) {
             blockedX = gameScreen.isPositionBlocked((int) (newMapPositionX.x), (int) newMapPositionX.y);
+        } else {
+            blockedX = false;
         }
 
         // Y
