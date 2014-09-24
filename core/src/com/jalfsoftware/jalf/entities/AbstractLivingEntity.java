@@ -46,7 +46,6 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
         float delta = Gdx.graphics.getDeltaTime();
 
-        // TODO: Alles aufräumen!
         // X-Achse
         // Beschleunigen
         switch (requestedDirection) {
@@ -72,38 +71,37 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         }
 
         // Y-Achse
+        // Beschleunigen (Gravitation)
         currentSpeed.y -= GameScreen.GRAVITATION_CONSTANT;
+
+        // Kollision
+        // Herausfinden, ob neue Position blockiert ist
+        boolean blockedX = false;
+        boolean blockedY = false;
+
+        // X
+        Vector2 newPositionX = new Vector2(getX() + currentSpeed.x, getY());
+        Vector2 newMapPositionX = gameScreen.convertToMapPosition(newPositionX);
+        if (currentSpeed.x > 0) {
+            blockedX = gameScreen.isPositionBlocked((int) (newMapPositionX.x + 1), (int) newMapPositionX.y);
+        } else if (currentSpeed.x < 0) {
+            blockedX = gameScreen.isPositionBlocked((int) (newMapPositionX.x), (int) newMapPositionX.y);
+        }
+
+        // Y
         Vector2 newPositionY = new Vector2(getX(), getY() + currentSpeed.y);
         Vector2 newMapPositionY = gameScreen.convertToMapPosition(newPositionY);
+        blockedY = gameScreen.isPositionBlocked((int) newMapPositionY.x, (int) newMapPositionY.y) ||
+                   gameScreen.isPositionBlocked((int) newMapPositionY.x + 1, (int) newMapPositionY.y);
 
-        boolean newPositionBlockedY = gameScreen.isPositionBlocked((int) newMapPositionY.x, (int) newMapPositionY.y) ||
-                                      gameScreen.isPositionBlocked((int) newMapPositionY.x + 1, (int) newMapPositionY.y);
-
-        if (newPositionBlockedY) {
+        if (blockedX) currentSpeed.x = 0;
+        if (blockedY) {
             currentSpeed.y = 0;
             jumpCount = 0;
         }
 
-        // Neue Position
-        Vector2 newPosition = new Vector2(getX() + currentSpeed.x, getY());
-
-        // Neue Mapposition
-        Vector2 newMapPosition = gameScreen.convertToMapPosition(newPosition);
-
-        // Position ändern, wenn keine Kollision
-        boolean newPositionBlockedX = false;
-        if (currentSpeed.x > 0) {
-            newPositionBlockedX = gameScreen.isPositionBlocked((int) (newMapPosition.x + 1), (int) newMapPosition.y);
-        } else if (currentSpeed.x < 0) {
-            newPositionBlockedX = gameScreen.isPositionBlocked((int) (newMapPosition.x), (int) newMapPosition.y);
-        }
-        /*Gdx.app.log(LOG, "Neue Position:" + (int) newMapPosition.x + "|" + (int) newMapPosition.y + " Ist blockiert: " +
-                         newPositionBlockedX);*/
-        if (!newPositionBlockedX) setPosition(newPosition.x, newPosition.y);
-        else currentSpeed.x = 0;
-
-        setPosition(getX(), getY() + currentSpeed.y);
-
+        // Neue Position setzen
+        setPosition(getX() + currentSpeed.x, getY() + currentSpeed.y);
     }
 
     public void takeDamage(int damage) {
