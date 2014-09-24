@@ -145,10 +145,6 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         return currentSpeed;
     }
 
-    public void applyGravity(float delta) {
-        setPosition(getX(), getY() - GameScreen.GRAVITATION_CONSTANT * delta);
-    }
-
     public static enum Direction {
         LEFT,
         RIGHT,
