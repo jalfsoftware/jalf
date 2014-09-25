@@ -30,7 +30,7 @@
  </layer>
  <layer name="mgLayer" width="100" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt07EJACAQBEHBSPsv2BLkUfGCGfjss+VaAwAAAH7rl364Q48semSZxeOtUTzeqvbYbcaezlR77DZjT2f0yKJHFj2yLBORBLE=
+   eJzt1rEKgDAMRdFCJvv/H+wqDm1eNDS090BwcSheQm0NJ7LVBwCwHXsM9kVfAEAE94ePvZ6jd5DP863VHvwvx2X0QFwXJ4qmPpc4yKX2mO3MX/t0KrXHbGfYp2/oUQs9aqFHLTdj/wTP
   </data>
  </layer>
  <layer name="fgLayer" width="100" height="20">
