@@ -37,8 +37,7 @@ public class GameScreen extends AbstractScreen {
         // Maprenderer initialisieren
         currentMap = new TmxMapLoader().load("map1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(currentMap, UNITSCALE);
-        collisionLayer = (TiledMapTileLayer) currentMap.getLayers()
-                                                       .get(COLLISION_LAYER_NAME);
+        collisionLayer = (TiledMapTileLayer) currentMap.getLayers().get(COLLISION_LAYER_NAME);
 
         // Spieler initialisieren
         Vector2 spawnPosition = convertToScreenPosition(new Vector2(3, 12));
@@ -62,14 +61,12 @@ public class GameScreen extends AbstractScreen {
         mapRenderer.setView(camera);
         mapRenderer.render();
 
-        mapRenderer.getSpriteBatch()
-                   .begin();
+        mapRenderer.getSpriteBatch().begin();
 
         // Spieler rendern
         player.render(mapRenderer.getSpriteBatch());
 
-        mapRenderer.getSpriteBatch()
-                   .end();
+        mapRenderer.getSpriteBatch().end();
     }
 
     /**
@@ -77,9 +74,7 @@ public class GameScreen extends AbstractScreen {
      */
     public boolean isPositionBlocked(int x, int y) {
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
-        return cell != null && cell.getTile() != null && cell.getTile()
-                                                             .getProperties()
-                                                             .containsKey(TILE_BLOCKED_KEY);
+        return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_BLOCKED_KEY);
     }
 
     /**
@@ -96,6 +91,28 @@ public class GameScreen extends AbstractScreen {
     public Vector2 convertToScreenPosition(Vector2 mapPosition) {
         return new Vector2((mapPosition.x * collisionLayer.getTileWidth()) * UNITSCALE,
                            (mapPosition.y * collisionLayer.getTileHeight()) * UNITSCALE);
+    }
+
+    /**
+     * Konvertiert ScreenUnits zu MapUnits
+     */
+    public float convertToMapUnits(float screenUnits) {
+        return screenUnits / collisionLayer.getTileWidth() / UNITSCALE;
+    }
+
+    /**
+     * Konvertiert MapUnits zu ScreenUnits
+     */
+    public float convertToScreenUnits(float mapUnits) {
+        return mapUnits * collisionLayer.getTileWidth() * UNITSCALE;
+    }
+
+    public float getMapTileHeight() {
+        return collisionLayer.getTileHeight();
+    }
+
+    public float getMapTileWidth() {
+        return collisionLayer.getTileWidth();
     }
 
     @Override
