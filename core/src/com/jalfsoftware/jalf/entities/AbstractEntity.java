@@ -29,6 +29,14 @@ public abstract class AbstractEntity {
         sprite.setPosition(x, y);
     }
 
+    protected void setX(float x) {
+        sprite.setX(x);
+    }
+
+    protected void setY(float y) {
+        sprite.setY(y);
+    }
+
     public Vector2 getPosition() {
         return new Vector2(sprite.getX(), sprite.getY());
     }
