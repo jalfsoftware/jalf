@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
 import com.jalfsoftware.jalf.entities.Player;
+import com.jalfsoftware.jalf.helper.Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,13 @@ public class GameScreen extends AbstractScreen {
     private static final String TILE_BLOCKED_KEY     = "blocked";
     private static final String COLLISION_LAYER_NAME = "mgLayer";
 
-    public GameScreen(Jalf jalf) {
+    public GameScreen(Jalf jalf, Map map) {
         super(jalf);
 
         // Maprenderer initialisieren
-        currentMap = new TmxMapLoader().load("map1.tmx");
+        Gdx.app.log(LOG, "Loading " + (map.isDefault() ? "defaultmap " : "usermap ") + map.getName() + " from " + map.getPath());
+        currentMap = new TmxMapLoader().load(map.getPath());
+
         mapRenderer = new OrthogonalTiledMapRenderer(currentMap, UNITSCALE);
         collisionLayer = (TiledMapTileLayer) currentMap.getLayers().get(COLLISION_LAYER_NAME);
 
