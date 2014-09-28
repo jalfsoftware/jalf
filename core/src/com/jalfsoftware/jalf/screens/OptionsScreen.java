@@ -67,7 +67,7 @@ public class OptionsScreen extends AbstractScreen {
                 jalf.setScreen(new MenuScreen(jalf));
             }
         });
-        table.add(backButton).expand().fill().pad(0, 150, 25, 150);
+        table.add(backButton).fill().pad(0, 150, 25, 150);
         table.row();
 
         // Footer

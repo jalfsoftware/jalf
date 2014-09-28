@@ -48,7 +48,7 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                jalf.setScreen(new GameScreen(jalf));
+                jalf.setScreen(new LevelSelectionScreen(jalf));
             }
         });
         table.add(startGameButton).expand().fill().pad(0, 150, 25, 150);
