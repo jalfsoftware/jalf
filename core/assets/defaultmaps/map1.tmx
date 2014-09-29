@@ -25,6 +25,11 @@
  </tileset>
  <tileset firstgid="65" name="ojTileset" tilewidth="32" tileheight="32">
   <image source="ojTileset.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="playerSpawn" value=""/>
+   </properties>
+  </tile>
   <tile id="1">
    <properties>
     <property name="mapEnd" value=""/>
