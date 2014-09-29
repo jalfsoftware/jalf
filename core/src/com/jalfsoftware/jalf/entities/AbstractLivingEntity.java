@@ -109,7 +109,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
                 if (blockedX) break;
             }
         } else if (currentSpeed.x < 0) {
-            for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
+            if ((getX() + currentSpeed.x) < 0) {
+                blockedX = true;
+            } else for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
                 blockedX = gameScreen.isPositionBlocked(newMapPositionX, i);
                 if (blockedX) break;
             }
