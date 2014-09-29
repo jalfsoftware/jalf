@@ -12,7 +12,6 @@ import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.helper.Map;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ public class GameScreen extends AbstractScreen {
     private TiledMapTileLayer          collisionLayer;
 
     private List<AbstractEntity> entityList;
-    private Date                 startTime;
+    private long                 startTime;
 
     // Map-Strings
     private static final String TILE_BLOCKED_KEY     = "blocked";
@@ -52,13 +51,12 @@ public class GameScreen extends AbstractScreen {
         entityList = new ArrayList<AbstractEntity>();
 
         // Startzeit festlegen
-        startTime = new Date(System.currentTimeMillis());
+        startTime = System.currentTimeMillis();
         Gdx.input.setInputProcessor(player);
     }
 
     private long getTimeSinceStart() {
-        Date date = new Date(System.currentTimeMillis());
-        return date.getTime() - startTime.getTime();
+        return System.currentTimeMillis() - startTime;
     }
 
     @Override
