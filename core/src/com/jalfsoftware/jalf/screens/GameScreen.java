@@ -69,8 +69,8 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void preUIrender(float delta) {
         // Kamera auf Spieler-X ausrichten, auf Map setzen und Map rendern
-        if (player.getX() > 400) camera.position.x = player.getX(); // TODO: 400 mit Konstante aus Viewport oder so ersetzen
-        else camera.position.x = 400;
+        if (player.getX() > SCREEN_WIDTH / 2) camera.position.x = player.getX();
+        else camera.position.x = SCREEN_WIDTH / 2;
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render();
