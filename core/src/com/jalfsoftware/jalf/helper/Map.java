@@ -1,5 +1,6 @@
 package com.jalfsoftware.jalf.helper;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.jalfsoftware.jalf.screens.GameScreen;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +82,10 @@ public class Map {
         }
 
         // Prüfung, ob Map ordnungsgemäß geladen wurde
-        if (spawnPosition != null && !endPositions.isEmpty()) return true;
+        if (spawnPosition != null && !endPositions.isEmpty()) {
+            Gdx.app.log(LOG, "Map " + name + " in " + path + " was loaded succesfully with " + endPositions.size() + " endpositions");
+            return true;
+        }
         else return false;
     }
 
@@ -90,6 +95,25 @@ public class Map {
     public boolean isPositionBlocked(int x, int y) {
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
         return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_BLOCKED_KEY);
+    }
+
+    /**
+     * Prüft, ob die übergebene Position nah genug an einer Mapendeposition dran ist, um die Map zu wechseln
+     */
+    public boolean isPositionEndPosition(float x, float y) {
+        MapObjects objects = objectLayer.getObjects();
+        for (MapObject object : objects) {
+            if (object instanceof RectangleMapObject) {
+                if (map.getTileSets()
+                       .getTile((Integer) object.getProperties().get(MAP_OBJECT_TILE_REFERENCE_NAME))
+                       .getProperties()
+                       .containsKey(TILE_MAP_END_KEY)) {
+                    Vector2 center = ((RectangleMapObject) object).getRectangle().getPosition(new Vector2());
+                    if (center.dst(x * getMapTileWidth(), y * getMapTileWidth()) < getMapTileWidth() / 3) return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

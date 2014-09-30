@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Screen zur Darstellung des Spiels
  */
-public class GameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen implements Player.EndOfMapReachedListener {
     public static final float UNITSCALE            = 0.75f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
     public static final float GRAVITATION_CONSTANT = 0.2f;
 
@@ -33,6 +33,7 @@ public class GameScreen extends AbstractScreen {
 
         // Spieler initialisieren
         player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 20, 5, 5, this);
+        player.addListener(this);
 
         // Gegnerliste initialisieren
         entityList = new ArrayList<AbstractEntity>();
@@ -77,5 +78,11 @@ public class GameScreen extends AbstractScreen {
     @Override
     protected String getName() {
         return GameScreen.class.getSimpleName();
+    }
+
+    @Override
+    public void mapEndReachedEventHandler() {
+        // TODO: hier in das nächste Level, GameOverScreen oder ähnliches wechseln
+        jalf.setScreen(new LevelSelectionScreen(jalf));
     }
 }
