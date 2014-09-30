@@ -43,7 +43,7 @@
  </layer>
  <layer name="mgLayer" width="100" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt1sEKACEIRdHAVf3/B892iCh1RpK6B6SNi+ghWQpuJLsvAOA48iqci3wBAB78HzrSnbMexNO89ahnthOzL/t580CMZiwvMtWpxkIsax6rmflrnm5lzWM1M8zTN+SRC3nkQh65PLcDBNU=
+   eJzt1tEKgCAMhWFh3RS9//N2GyG6zWbD/g+GNwPFw9BS5jgn7QMd+foAAJYjt8K6yBcA4MH7oSOPtdWDeJq7rvW0/sT8l/1q97YpehDjMJYXmersxkIsax69mXlrnv7KmkdvZpinMeSRC3nkQh65XFrxBOU=
   </data>
  </layer>
  <layer name="fgLayer" width="100" height="20">
