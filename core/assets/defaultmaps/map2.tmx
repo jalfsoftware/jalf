@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="65" name="ojTileset" tilewidth="32" tileheight="32">
+  <image source="ojTileset.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="playerSpawn" value=""/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="mapEnd" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="bgLayer" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt1DEKACEMRNFgJ3v/+9pYSBpF1EmWX7xOcDIRi5kVhPYN1FluzxdxRp/vRd5X96zO+rd+d7Ipc9zqd+W8Ov/pHtQ5fMfqLLO3kvGOzGb/IX0BAAAAALzaqXOAfUTEPmJhH8ikAVXiEmE=
+  </data>
+ </layer>
+ <layer name="mgLayer" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztlksKwCAMBbPoJtL7n7cULFgxNvFDNbyBhwsxSKYNEgEAAAAAAACAT0IMWAOOmeHknFDTO0zznPDgel4IJM8lpvFOOFvBm7Tftb1eJ7kHjz6OATVqfSn5sDqRPHjz0fv2ec5rfLTw5cGDj3TWp9+qFM35O9Jbp8WH1oMHH9L8qM0VyUEpo+5oWXfG6kObv+62Oyv5sP578NHfF2nutfbfm48Lc54IbQ==
+  </data>
+ </layer>
+ <layer name="fgLayer" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAYH0AAAQ==
+  </data>
+ </layer>
+ <objectgroup name="ojLayer" width="100" height="20">
+  <object gid="65" x="128" y="448"/>
+  <object gid="66" x="704" y="512"/>
+  <object gid="66" x="1632" y="320"/>
+ </objectgroup>
+</map>
