@@ -51,16 +51,14 @@ public abstract class AbstractScreen implements Screen {
         //FPS Label
         fpsLabel.setFontScale(0.5f);
         fpsLabel.setPosition(uiStage.getWidth() - fpsLabel.getPrefWidth(), uiStage.getHeight() - fpsLabel.getHeight());
-        if (jalf.getPreferencesManager()
-                .isFpsCounterEnabled()) uiStage.addActor(fpsLabel);
+        if (jalf.getPreferencesManager().isFpsCounterEnabled()) uiStage.addActor(fpsLabel);
 
     }
 
     @Override
     public void resize(int width, int height) {
         Gdx.app.log(LOG, "Resizing screen: " + getName() + " to: " + width + " x " + height);
-        uiStage.getViewport()
-               .update(width, height, true);
+        uiStage.getViewport().update(width, height, true);
     }
 
     @Override

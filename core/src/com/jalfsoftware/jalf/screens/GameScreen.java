@@ -47,10 +47,6 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         return System.currentTimeMillis() - startTime;
     }
 
-    private int getPlayerLifes() {
-        return player.getLifes();
-    }
-
     @Override
     public void show() {
         super.show();
