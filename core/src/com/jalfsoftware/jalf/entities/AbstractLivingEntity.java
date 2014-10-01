@@ -46,12 +46,17 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
         float delta = Gdx.graphics.getDeltaTime();
 
-        // Bewegen
         updateCurrentSpeed(delta);
         doCollisionDetectionHorizontal();
         doCollisionDetectionVertical();
+        doOutOfMapDetectionBottom();
+    }
 
-        //Gdx.app.log(LOG, getX() + "|" + getY());
+    /**
+     * Entity verliert Leben, wenn sie aus der Map fällt
+     */
+    private void doOutOfMapDetectionBottom() {
+        if (getY() < -getEntityHeight()) takeDamage(maxHealth);
     }
 
     /**

@@ -32,7 +32,7 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         // TODO: rausspringen, wenn Map nicht korrekt aufgebaut
 
         // Spieler initialisieren
-        player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 20, 5, 5, this);
+        player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 3, 20, 5, 5, this);
         player.addListener(this);
 
         // Gegnerliste initialisieren
@@ -45,6 +45,10 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
     private long getTimeSinceStart() {
         return System.currentTimeMillis() - startTime;
+    }
+
+    private int getPlayerLifes() {
+        return player.getLifes();
     }
 
     @Override
@@ -83,6 +87,10 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     @Override
     public void mapEndReachedEventHandler() {
         // TODO: hier in das nächste Level, GameOverScreen oder ähnliches wechseln
+        jalf.setScreen(new LevelSelectionScreen(jalf));
+    }
+
+    public void playerDead() {
         jalf.setScreen(new LevelSelectionScreen(jalf));
     }
 }

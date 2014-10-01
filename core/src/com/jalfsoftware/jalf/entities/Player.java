@@ -18,10 +18,12 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
     List<EndOfMapReachedListener> listeners = new ArrayList<EndOfMapReachedListener>();
 
     Vector2 spawnPosition;
+    int     lifes;
 
-    public Player(float xPos, float yPos, int currentHealth, int maxHealth, float acceleration, float maxSpeed, float jumpSpeed,
+    public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lifes, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
         super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
+        this.lifes = lifes;
         spawnPosition = new Vector2(xPos, yPos);
     }
 
@@ -33,6 +35,14 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
     public void render(Batch batch) {
         super.render(batch);
         checkIfEndReached();
+
+        // Bei <=0 HP neu spawnen
+        if (!isAlive()) {
+            currentHealth = maxHealth;
+            lifes--;
+            if (lifes > 0) respawn();
+            else gameScreen.playerDead();
+        }
     }
 
     private void checkIfEndReached() {
@@ -48,6 +58,10 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
     private void respawn() {
         resetSpeed();
         setPosition(spawnPosition.x, spawnPosition.y);
+    }
+
+    public int getLifes() {
+        return lifes;
     }
 
     @Override
