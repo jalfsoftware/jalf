@@ -46,12 +46,17 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
         float delta = Gdx.graphics.getDeltaTime();
 
-        // Bewegen
         updateCurrentSpeed(delta);
         doCollisionDetectionHorizontal();
         doCollisionDetectionVertical();
+        doOutOfMapDetectionBottom();
+    }
 
-        //Gdx.app.log(LOG, getX() + "|" + getY());
+    /**
+     * Entity verliert Leben, wenn sie aus der Map fällt
+     */
+    private void doOutOfMapDetectionBottom() {
+        if (getY() < -getEntityHeight()) takeDamage(maxHealth);
     }
 
     /**
@@ -93,24 +98,26 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     private void doCollisionDetectionHorizontal() {
         boolean blockedX = false;
 
-        float entityMapWidth = gameScreen.convertToMapUnits(getEntityWidth());
+        float entityMapWidth = gameScreen.getMap().convertToMapUnits(getEntityWidth());
 
-        int newMapPositionX = (int) gameScreen.convertToMapUnits(getX() + currentSpeed.x);
+        int newMapPositionX = (int) gameScreen.getMap().convertToMapUnits(getX() + currentSpeed.x);
 
         // Berührende Tilehöhen an Kanten finden
         // Unten
-        int yPosTileBottom = (int) gameScreen.convertToMapUnits(getY());
+        int yPosTileBottom = (int) gameScreen.getMap().convertToMapUnits(getY());
         // Oben
-        int yPosTileTop = (int) gameScreen.convertToMapUnits(getY() + getEntityHeight() - 1);
+        int yPosTileTop = (int) gameScreen.getMap().convertToMapUnits(getY() + getEntityHeight() - 1);
 
         if (currentSpeed.x > 0) {
             for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
-                blockedX = gameScreen.isPositionBlocked((int) (newMapPositionX + entityMapWidth), i);
+                blockedX = gameScreen.getMap().isPositionBlocked((int) (newMapPositionX + entityMapWidth), i);
                 if (blockedX) break;
             }
         } else if (currentSpeed.x < 0) {
-            for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
-                blockedX = gameScreen.isPositionBlocked(newMapPositionX, i);
+            if ((getX() + currentSpeed.x) < 0) {
+                blockedX = true;
+            } else for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
+                blockedX = gameScreen.getMap().isPositionBlocked(newMapPositionX, i);
                 if (blockedX) break;
             }
         } else {
@@ -118,8 +125,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         }
 
         if (blockedX) {
-            int mapX = (int) gameScreen.convertToMapUnits(getX() + ((currentSpeed.x > 0) ? 1 : 0) * (getEntityWidth() - 1));
-            setX((int) gameScreen.convertToScreenUnits(mapX));
+            int mapX = (int) gameScreen.getMap().convertToMapUnits(getX() + ((currentSpeed.x > 0) ? 1 : 0) * (getEntityWidth() - 1));
+            setX((int) gameScreen.getMap().convertToScreenUnits(mapX));
             currentSpeed.x = 0;
         }
 
@@ -133,30 +140,30 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     private void doCollisionDetectionVertical() {
         boolean blockedYBottom, blockedYTop;
 
-        int entityMapHeight = (int) gameScreen.convertToMapUnits(getEntityHeight());
+        int entityMapHeight = (int) gameScreen.getMap().convertToMapUnits(getEntityHeight());
 
-        float newMapPositionY = gameScreen.convertToMapUnits(getY() + currentSpeed.y);
-        float newMapPositionX = gameScreen.convertToMapUnits(getX());
-        float newMapPositionXRight = gameScreen.convertToMapUnits(getX() + getEntityWidth() - 1);
+        float newMapPositionY = gameScreen.getMap().convertToMapUnits(getY() + currentSpeed.y);
+        float newMapPositionX = gameScreen.getMap().convertToMapUnits(getX());
+        float newMapPositionXRight = gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() - 1);
 
         // Unten
-        blockedYBottom = gameScreen.isPositionBlocked((int) newMapPositionX, (int) newMapPositionY) ||
-                         gameScreen.isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY);
+        blockedYBottom = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY) ||
+                         gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY);
 
         // Oben
-        blockedYTop = gameScreen.isPositionBlocked((int) newMapPositionX, (int) newMapPositionY + entityMapHeight) ||
-                      gameScreen.isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
+        blockedYTop = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY + entityMapHeight) ||
+                      gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
 
         if (blockedYBottom) {
-            int mapY = (int) gameScreen.convertToMapUnits(getY());
-            setY((int) gameScreen.convertToScreenUnits(mapY));
+            int mapY = (int) gameScreen.getMap().convertToMapUnits(getY());
+            setY((int) gameScreen.getMap().convertToScreenUnits(mapY));
 
             currentSpeed.y = 0;
             jumpCount = 0;
         }
         if (blockedYTop) {
-            int mapY = (int) gameScreen.convertToMapUnits(getY() + (getEntityHeight() / 3 - 1));
-            setY((int) gameScreen.convertToScreenUnits(mapY));
+            int mapY = (int) gameScreen.getMap().convertToMapUnits(getY() + (getEntityHeight() / 3 - 1));
+            setY((int) gameScreen.getMap().convertToScreenUnits(mapY));
 
             currentSpeed.y = 0;
         }
@@ -178,6 +185,13 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
             jumpCount++;
             currentSpeed.y = jumpSpeed;
         }
+    }
+
+    /**
+     * Setzt die aktuelle Geschwindigkeit in beiden Achsen auf 0
+     */
+    protected void resetSpeed() {
+        currentSpeed.x = currentSpeed.y = 0;
     }
 
     public float getEntityHeight() {

@@ -1,1 +1,2 @@
 Debugmap|map1.tmx
+Neue Debugmap|map2.tmx

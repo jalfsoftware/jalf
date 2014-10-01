@@ -4,16 +4,64 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.jalfsoftware.jalf.screens.GameScreen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Die vom Spieler steuerbare Figur
  */
 public class Player extends AbstractLivingEntity implements InputProcessor {
+    List<EndOfMapReachedListener> listeners = new ArrayList<EndOfMapReachedListener>();
 
-    public Player(float xPos, float yPos, int currentHealth, int maxHealth, float acceleration, float maxSpeed, float jumpSpeed,
+    Vector2 spawnPosition;
+    int     lifes;
+
+    public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lifes, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
         super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
+        this.lifes = lifes;
+        spawnPosition = new Vector2(xPos, yPos);
+    }
+
+    public void addListener(EndOfMapReachedListener listener) {
+        listeners.add(listener);
+    }
+
+    @Override
+    public void render(Batch batch) {
+        super.render(batch);
+        checkIfEndReached();
+
+        // Bei <=0 HP neu spawnen
+        if (!isAlive()) {
+            currentHealth = maxHealth;
+            lifes--;
+            if (lifes > 0) respawn();
+            else gameScreen.playerDead();
+        }
+    }
+
+    private void checkIfEndReached() {
+        if (gameScreen.getMap()
+                      .isPositionEndPosition(gameScreen.getMap().convertToMapUnits(getX()),
+                                             gameScreen.getMap().convertToMapUnits(getY()))) {
+            for (EndOfMapReachedListener listener : listeners) {
+                listener.mapEndReachedEventHandler();
+            }
+        }
+    }
+
+    private void respawn() {
+        resetSpeed();
+        setPosition(spawnPosition.x, spawnPosition.y);
+    }
+
+    public int getLifes() {
+        return lifes;
     }
 
     @Override
@@ -34,6 +82,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
                 break;
             case Input.Keys.SPACE:
                 jump();
+                break;
+            case Input.Keys.R:
+                respawn();
                 break;
         }
         return keyProcessed;
@@ -91,5 +142,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public interface EndOfMapReachedListener {
+        public void mapEndReachedEventHandler();
     }
 }
