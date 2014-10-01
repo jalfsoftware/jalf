@@ -182,6 +182,13 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         }
     }
 
+    /**
+     * Setzt die aktuelle Geschwindigkeit in beiden Achsen auf 0
+     */
+    protected void resetSpeed() {
+        currentSpeed.x = currentSpeed.y = 0;
+    }
+
     public float getEntityHeight() {
         return sprite.getHeight();
     }

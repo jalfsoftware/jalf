@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.jalfsoftware.jalf.screens.GameScreen;
 
 import java.util.ArrayList;
@@ -16,9 +17,12 @@ import java.util.List;
 public class Player extends AbstractLivingEntity implements InputProcessor {
     List<EndOfMapReachedListener> listeners = new ArrayList<EndOfMapReachedListener>();
 
+    Vector2 spawnPosition;
+
     public Player(float xPos, float yPos, int currentHealth, int maxHealth, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
         super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
+        spawnPosition = new Vector2(xPos, yPos);
     }
 
     public void addListener(EndOfMapReachedListener listener) {
@@ -41,6 +45,11 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
         }
     }
 
+    private void respawn() {
+        resetSpeed();
+        setPosition(spawnPosition.x, spawnPosition.y);
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         boolean keyProcessed = false;
@@ -59,6 +68,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
                 break;
             case Input.Keys.SPACE:
                 jump();
+                break;
+            case Input.Keys.R:
+                respawn();
                 break;
         }
         return keyProcessed;
