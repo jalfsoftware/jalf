@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.jalfsoftware.jalf.helper.Map;
 import com.jalfsoftware.jalf.screens.GameScreen;
 
 /**
@@ -22,7 +23,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
     private int jumpCount;
 
-    private Direction requestedDirection;
+    private Direction           requestedDirection;
+    private Map.TilePhysicsType currentAppliedPhysics;
 
     public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxHealth, float acceleration,
                                 float maxSpeed, float jumpSpeed, GameScreen gameScreen) {
@@ -38,6 +40,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         currentSpeed = new Vector2(0, 0);
 
         requestedDirection = Direction.NONE;
+        currentAppliedPhysics = Map.TilePhysicsType.NONE;
     }
 
     @Override
@@ -60,29 +63,48 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     }
 
     /**
-     * Updated currentSpeed unter Verwendung von requestedDirection, acceleration, maxSpeed und Gravitation
+     * Updated currentSpeed unter Verwendung von requestedDirection, currentAppliedPhysics, acceleration, maxSpeed und Gravitation
      */
     private void updateCurrentSpeed(float delta) {
+        float actualAcceleration;
+        float actualMaxSpeed;
+
+        // TilePhysics
+        updateCurrentAppliedPhysics();
+        switch (currentAppliedPhysics) {
+            case ICE:
+                actualAcceleration = Map.TILE_ICE_ACCELERATION;
+                actualMaxSpeed = Map.TILE_ICE_MAX_SPEED;
+                break;
+            case MUD:
+                actualAcceleration = Map.TILE_MUD_ACCELERATION;
+                actualMaxSpeed = Map.TILE_MUD_MAX_SPEED;
+                break;
+            default:
+                actualAcceleration = acceleration;
+                actualMaxSpeed = maxSpeed;
+        }
+
         // X-Achse
         // Beschleunigen
         switch (requestedDirection) {
             case LEFT:
-                currentSpeed.x -= acceleration * delta;
-                if (currentSpeed.x < -maxSpeed) currentSpeed.x = -maxSpeed;
+                currentSpeed.x -= actualAcceleration * delta;
+                if (currentSpeed.x < -actualMaxSpeed) currentSpeed.x = -actualMaxSpeed;
                 break;
             case RIGHT:
-                currentSpeed.x += acceleration * delta;
-                if (currentSpeed.x > maxSpeed) currentSpeed.x = maxSpeed;
+                currentSpeed.x += actualAcceleration * delta;
+                if (currentSpeed.x > actualMaxSpeed) currentSpeed.x = actualMaxSpeed;
                 break;
         }
 
         // Verlangsamen
         if (requestedDirection == Direction.NONE && Math.abs(currentSpeed.x) > 0) {
             if (currentSpeed.x > 0) {
-                currentSpeed.x -= acceleration * delta;
+                currentSpeed.x -= actualAcceleration * delta;
                 if (currentSpeed.x < 0) currentSpeed.x = 0;
             } else {
-                currentSpeed.x += acceleration * delta;
+                currentSpeed.x += actualAcceleration * delta;
                 if (currentSpeed.x > 0) currentSpeed.x = 0;
             }
         }
@@ -90,6 +112,17 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         // Y-Achse
         // Beschleunigen (Gravitation)
         currentSpeed.y -= GameScreen.GRAVITATION_CONSTANT;
+    }
+
+    /**
+     * Updated das Feld currentAppliedPhysics, wenn die Entity auf einem Tile steht auf Basis dessen Physikeigenschaften
+     */
+    private void updateCurrentAppliedPhysics() {
+        Vector2 mapPosition = gameScreen.getMap().convertToMapPosition(new Vector2(getX() + getEntityWidth() / 2, getY() - 1));
+        Map.TilePhysicsType tilePhysicsType = gameScreen.getMap().isTilePhysicsTile((int) mapPosition.x, (int) mapPosition.y);
+        if (gameScreen.getMap().isPositionBlocked((int) mapPosition.x, (int) mapPosition.y)) {
+            currentAppliedPhysics = tilePhysicsType;
+        }
     }
 
     /**
