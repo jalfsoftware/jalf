@@ -80,6 +80,14 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
                 move(Direction.RIGHT);
                 keyProcessed = true;
                 break;
+            case Input.Keys.UP:
+            case Input.Keys.W:
+                moveLadder(LadderDirection.UP);
+                break;
+            case Input.Keys.DOWN:
+            case Input.Keys.S:
+                moveLadder(LadderDirection.DOWN);
+                break;
             case Input.Keys.SPACE:
                 jump();
                 break;
@@ -108,6 +116,13 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
 
                 if ((keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) &&
                     (Gdx.input.isKeyPressed(Input.Keys.LEFT) || keycode == Input.Keys.A)) move(Direction.LEFT);
+                keyProcessed = true;
+                break;
+            case Input.Keys.UP:
+            case Input.Keys.W:
+            case Input.Keys.DOWN:
+            case Input.Keys.S:
+                moveLadder(LadderDirection.NONE);
                 keyProcessed = true;
                 break;
         }
