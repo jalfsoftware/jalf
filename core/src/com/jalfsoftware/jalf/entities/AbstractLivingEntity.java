@@ -58,8 +58,6 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         doCollisionDetectionVertical();
         doOutOfMapDetectionBottom();
         updateLadderFlag();
-
-        Gdx.app.log(LOG, getX() + "|" + getY());
     }
 
     /**
