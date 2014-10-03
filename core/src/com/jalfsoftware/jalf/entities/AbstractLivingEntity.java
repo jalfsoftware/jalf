@@ -24,7 +24,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     private int jumpCount;
 
     private Direction           requestedDirection;
+    private LadderDirection     requestedLadderDirection;
     private Map.TilePhysicsType currentAppliedPhysics;
+    private boolean             entityIsOnLadder;
 
     public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxHealth, float acceleration,
                                 float maxSpeed, float jumpSpeed, GameScreen gameScreen) {
@@ -38,8 +40,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
         jumpCount = 0;
         currentSpeed = new Vector2(0, 0);
+        entityIsOnLadder = false;
 
         requestedDirection = Direction.NONE;
+        requestedLadderDirection = LadderDirection.NONE;
         currentAppliedPhysics = Map.TilePhysicsType.NONE;
     }
 
@@ -53,6 +57,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         doCollisionDetectionHorizontal();
         doCollisionDetectionVertical();
         doOutOfMapDetectionBottom();
+        updateLadderFlag();
+
+        Gdx.app.log(LOG, getX() + "|" + getY());
     }
 
     /**
@@ -112,6 +119,19 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         // Y-Achse
         // Beschleunigen (Gravitation)
         currentSpeed.y -= GameScreen.GRAVITATION_CONSTANT;
+        if (entityIsOnLadder) {
+            switch (requestedLadderDirection) {
+                case UP:
+                    currentSpeed.y = Map.TILE_LADDER_SPEED;
+                    break;
+                case DOWN:
+                    currentSpeed.y = -Map.TILE_LADDER_SPEED;
+                    break;
+                default:
+                    currentSpeed.y = 0;
+            }
+            currentAppliedPhysics = Map.TilePhysicsType.NONE;
+        }
     }
 
     /**
@@ -123,6 +143,17 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         if (gameScreen.getMap().isPositionBlocked((int) mapPosition.x, (int) mapPosition.y)) {
             currentAppliedPhysics = tilePhysicsType;
         }
+    }
+
+    /**
+     * Updated entityIsOnLadder
+     */
+    private void updateLadderFlag() {
+        Vector2 mapPosition = gameScreen.getMap().convertToMapPosition(new Vector2(getX() + getEntityWidth() / 2, getY()));
+        float mapHeadYPos = gameScreen.getMap().convertToMapUnits(getY() + getEntityHeight() - 1);
+
+        entityIsOnLadder = gameScreen.getMap().isTileLadderTile((int) mapPosition.x, (int) mapPosition.y) ||
+                           gameScreen.getMap().isTileLadderTile((int) mapPosition.x, (int) mapHeadYPos);
     }
 
     /**
@@ -171,7 +202,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
      * Updated Position und currentSpeed bei Kollision der Entität mit Tiles der Map in der Y-Achse
      */
     private void doCollisionDetectionVertical() {
-        boolean blockedYBottom, blockedYTop;
+        boolean blockedYBottom, blockedYTop, blockedYLadder;
 
         int entityMapHeight = (int) gameScreen.getMap().convertToMapUnits(getEntityHeight());
 
@@ -182,7 +213,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         // Unten
         blockedYBottom = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY) ||
                          gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY);
-
+        blockedYLadder = gameScreen.getMap()
+                                   .isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
+                                                     (int) newMapPositionY);
         // Oben
         blockedYTop = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY + entityMapHeight) ||
                       gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
@@ -190,6 +223,17 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         if (blockedYBottom) {
             int mapY = (int) gameScreen.getMap().convertToMapUnits(getY());
             setY((int) gameScreen.getMap().convertToScreenUnits(mapY));
+
+            currentSpeed.y = 0;
+            jumpCount = 0;
+        } else if (blockedYLadder && !entityIsOnLadder && requestedLadderDirection != LadderDirection.DOWN) {
+            // Nur teleportieren, wenn auf dem oberen Ende der Leiter gelandet
+            if (!gameScreen.getMap()
+                           .isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
+                                             (int) gameScreen.getMap().convertToMapUnits(getY()))) {
+                int mapY = (int) gameScreen.getMap().convertToMapUnits(getY());
+                setY((int) gameScreen.getMap().convertToScreenUnits(mapY));
+            }
 
             currentSpeed.y = 0;
             jumpCount = 0;
@@ -211,6 +255,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
     protected void move(Direction direction) {
         requestedDirection = direction;
+    }
+
+    protected void moveLadder(LadderDirection direction) {
+        requestedLadderDirection = direction;
     }
 
     protected void jump() {
@@ -262,6 +310,12 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     public static enum Direction {
         LEFT,
         RIGHT,
+        NONE
+    }
+
+    public static enum LadderDirection {
+        UP,
+        DOWN,
         NONE
     }
 }
