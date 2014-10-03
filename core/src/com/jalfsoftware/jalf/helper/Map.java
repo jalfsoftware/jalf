@@ -45,14 +45,16 @@ public class Map {
     private static final String TILE_MAP_END_KEY               = "mapEnd";
 
     // Tilephysics-Private-Konstanten
-    private static final String TILE_ICE_KEY = "ice";
-    private static final String TILE_MUD_KEY = "mud";
+    private static final String TILE_ICE_KEY    = "ice";
+    private static final String TILE_MUD_KEY    = "mud";
+    private static final String TILE_LADDER_KEY = "ladder";
 
     // Tilephysics-Public-Konstanten
     public static final float TILE_ICE_ACCELERATION = 5f;
     public static final float TILE_ICE_MAX_SPEED    = 10f;
     public static final float TILE_MUD_ACCELERATION = 10f;
     public static final float TILE_MUD_MAX_SPEED    = 2f;
+    public static final float TILE_LADDER_SPEED     = 2f;
 
     public Map(String name, String path, boolean isDefault) {
         this.name = name;
@@ -135,6 +137,14 @@ public class Map {
             if (cell.getTile().getProperties().containsKey(TILE_MUD_KEY)) return TilePhysicsType.MUD;
             return TilePhysicsType.NONE;
         } else return TilePhysicsType.NONE;
+    }
+
+    /**
+     * Prüft, ob angegeben Position im Kollisionlayer ein Leiterntile enthält
+     */
+    public boolean isTileLadderTile(int x, int y) {
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
+        return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_LADDER_KEY);
     }
 
     /**
