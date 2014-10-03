@@ -32,7 +32,7 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         // TODO: rausspringen, wenn Map nicht korrekt aufgebaut
 
         // Spieler initialisieren
-        player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 3, 20, 5, 5, this);
+        player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 3, 15, 3, 5, this);
         player.addListener(this);
 
         // Gegnerliste initialisieren

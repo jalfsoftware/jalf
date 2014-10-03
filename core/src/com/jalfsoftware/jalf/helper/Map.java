@@ -52,8 +52,8 @@ public class Map {
     // Tilephysics-Public-Konstanten
     public static final float TILE_ICE_ACCELERATION = 5f;
     public static final float TILE_ICE_MAX_SPEED    = 10f;
-    public static final float TILE_MUD_ACCELERATION = 10f;
-    public static final float TILE_MUD_MAX_SPEED    = 2f;
+    public static final float TILE_MUD_ACCELERATION = 5f;
+    public static final float TILE_MUD_MAX_SPEED    = 1.5f;
     public static final float TILE_LADDER_SPEED     = 2f;
 
     public Map(String name, String path, boolean isDefault) {
