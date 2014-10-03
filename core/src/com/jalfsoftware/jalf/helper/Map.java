@@ -44,6 +44,16 @@ public class Map {
     private static final String TILE_PLAYER_SPAWN_KEY          = "playerSpawn";
     private static final String TILE_MAP_END_KEY               = "mapEnd";
 
+    // Tilephysics-Private-Konstanten
+    private static final String TILE_ICE_KEY = "ice";
+    private static final String TILE_MUD_KEY = "mud";
+
+    // Tilephysics-Public-Konstanten
+    public static final float TILE_ICE_ACCELERATION = 5f;
+    public static final float TILE_ICE_MAX_SPEED    = 10f;
+    public static final float TILE_MUD_ACCELERATION = 10f;
+    public static final float TILE_MUD_MAX_SPEED    = 2f;
+
     public Map(String name, String path, boolean isDefault) {
         this.name = name;
         this.path = path;
@@ -115,6 +125,19 @@ public class Map {
     }
 
     /**
+     * Prüft, ob angegebene Mapposition im Kollisionslayer ein Physiktile ist, welches Entities beeinflusst,
+     * falls ja wird die Art zurückgegeben
+     */
+    public TilePhysicsType isTilePhysicsTile(int x, int y) {
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
+        if (cell != null && cell.getTile() != null) {
+            if (cell.getTile().getProperties().containsKey(TILE_ICE_KEY)) return TilePhysicsType.ICE;
+            if (cell.getTile().getProperties().containsKey(TILE_MUD_KEY)) return TilePhysicsType.MUD;
+            return TilePhysicsType.NONE;
+        } else return TilePhysicsType.NONE;
+    }
+
+    /**
      * Konvertiert eine Screen-Position zu einer Map-Position (1LE=1Tile)
      */
     public Vector2 convertToMapPosition(Vector2 screenPosition) {
@@ -183,5 +206,9 @@ public class Map {
     @Override
     public String toString() {
         return name;
+    }
+
+    public enum TilePhysicsType {
+        NONE, MUD, ICE
     }
 }
