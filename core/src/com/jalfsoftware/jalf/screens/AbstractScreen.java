@@ -9,7 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jalfsoftware.jalf.Jalf;
 
 /**
@@ -26,16 +27,17 @@ public abstract class AbstractScreen implements Screen {
     protected final Jalf               jalf; // Die aufrufende Spielinstanz
     protected final SpriteBatch        batch; // Ein SpriteBatch zum Rendern der Stage
     protected final OrthographicCamera camera; // Die Kamera als Perspektive auf das Spiel
+    protected final Viewport           viewport;
 
     private Label fpsLabel; // FPS-Anzeige
 
     public AbstractScreen(Jalf jalf) {
         this.jalf = jalf;
-        uiStage = new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT, camera);
+        uiStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         batch = new SpriteBatch();
-        camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
-        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         this.fpsLabel = new Label("", skin, "arial", Color.WHITE);
     }
 
@@ -50,7 +52,7 @@ public abstract class AbstractScreen implements Screen {
 
         //FPS Label
         fpsLabel.setFontScale(0.5f);
-        fpsLabel.setPosition(uiStage.getWidth() - fpsLabel.getPrefWidth(), uiStage.getHeight() - fpsLabel.getHeight());
+        fpsLabel.setPosition(SCREEN_WIDTH - fpsLabel.getPrefWidth(), SCREEN_HEIGHT - fpsLabel.getHeight());
         if (jalf.getPreferencesManager().isFpsCounterEnabled()) uiStage.addActor(fpsLabel);
 
     }
@@ -58,7 +60,8 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         Gdx.app.log(LOG, "Resizing screen: " + getName() + " to: " + width + " x " + height);
-        uiStage.getViewport().update(width, height, true);
+        uiStage.getViewport().update(width, height, false);
+        viewport.update(width, height, true);
     }
 
     @Override
@@ -102,7 +105,6 @@ public abstract class AbstractScreen implements Screen {
         // Update FPS-Counter
         fpsLabel.setText("FPS: " + String.valueOf(Gdx.graphics.getFramesPerSecond()));
         fpsLabel.setPosition(uiStage.getWidth() - fpsLabel.getPrefWidth(), uiStage.getHeight() - fpsLabel.getPrefHeight() / 2);
-
         uiStage.act(delta);
         uiStage.draw();
     }
