@@ -171,7 +171,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         int yPosTileTop = (int) gameScreen.getMap().convertToMapUnits(getY() + getEntityHeight() - 1);
 
         if (currentSpeed.x > 0) {
-            for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
+            if ((getX() + getEntityWidth() + currentSpeed.x) > gameScreen.getMap().getMapWidthAsScreenUnits()) {
+                blockedX = true;
+            } else for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
                 blockedX = gameScreen.getMap().isPositionBlocked((int) (newMapPositionX + entityMapWidth), i);
                 if (blockedX) break;
             }

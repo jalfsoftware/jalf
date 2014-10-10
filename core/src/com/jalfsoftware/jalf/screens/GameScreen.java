@@ -55,8 +55,16 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     @Override
     public void preUIrender(float delta) {
         // Kamera auf Spieler-X ausrichten, auf Map setzen und Map rendern
-        if (player.getX() > SCREEN_WIDTH / 2) camera.position.x = player.getX();
-        else camera.position.x = SCREEN_WIDTH / 2;
+        float playerCenterPos = player.getX() + player.getEntityWidth() / 2;
+        boolean playerOutLeft = playerCenterPos < (SCREEN_WIDTH / 2);
+        boolean playerOutRight = playerCenterPos > (getMap().getMapWidthAsScreenUnits() - (SCREEN_WIDTH / 2));
+
+        if (!playerOutLeft &&! playerOutRight)
+            camera.position.x = player.getX() + player.getEntityWidth() / 2;
+        else {
+            if (playerOutLeft) camera.position.x = SCREEN_WIDTH / 2;
+            else camera.position.x = getMap().getMapWidthAsScreenUnits() - (SCREEN_WIDTH / 2);
+        }
         camera.update();
 
         OrthogonalTiledMapRenderer renderer = map.getRenderer();
