@@ -177,6 +177,13 @@ public class Map {
         return mapUnits * collisionLayer.getTileWidth() * GameScreen.UNITSCALE;
     }
 
+    /**
+     * Gibt die Breite der geladenen Map in ScreenUnits zurück
+     */
+    public float getMapWidthAsScreenUnits() {
+        return map.getProperties().get("width", Integer.class) * getMapTileWidth() * GameScreen.UNITSCALE;
+    }
+
     public float getMapTileHeight() {
         return collisionLayer.getTileHeight();
     }
