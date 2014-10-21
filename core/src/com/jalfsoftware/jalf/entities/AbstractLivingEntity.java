@@ -27,6 +27,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     private LadderDirection     requestedLadderDirection;
     private Map.TilePhysicsType currentAppliedPhysics;
     private boolean             entityIsOnLadder;
+    private boolean             entityIsMidAir;
 
     public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxHealth, float acceleration,
                                 float maxSpeed, float jumpSpeed, GameScreen gameScreen) {
@@ -41,6 +42,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         jumpCount = 0;
         currentSpeed = new Vector2(0, 0);
         entityIsOnLadder = false;
+        entityIsMidAir = false;
 
         requestedDirection = Direction.NONE;
         requestedLadderDirection = LadderDirection.NONE;
@@ -52,7 +54,6 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         super.render(batch);
 
         float delta = Gdx.graphics.getDeltaTime();
-
         updateCurrentSpeed(delta);
         doCollisionDetectionHorizontal();
         doCollisionDetectionVertical();
@@ -94,12 +95,16 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         // Beschleunigen
         switch (requestedDirection) {
             case LEFT:
-                currentSpeed.x -= actualAcceleration * delta;
-                if (currentSpeed.x < -actualMaxSpeed) currentSpeed.x = -actualMaxSpeed;
+                if (!entityIsMidAir || currentSpeed.x > -maxSpeed) {
+                    currentSpeed.x -= actualAcceleration * delta;
+                    if (currentSpeed.x < -actualMaxSpeed) currentSpeed.x = -actualMaxSpeed;
+                }
                 break;
             case RIGHT:
-                currentSpeed.x += actualAcceleration * delta;
-                if (currentSpeed.x > actualMaxSpeed) currentSpeed.x = actualMaxSpeed;
+                if (!entityIsMidAir || currentSpeed.x < maxSpeed) {
+                    currentSpeed.x += actualAcceleration * delta;
+                    if (currentSpeed.x > actualMaxSpeed) currentSpeed.x = actualMaxSpeed;
+                }
                 break;
         }
 
@@ -140,7 +145,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         Map.TilePhysicsType tilePhysicsType = gameScreen.getMap().isTilePhysicsTile((int) mapPosition.x, (int) mapPosition.y);
         if (gameScreen.getMap().isPositionBlocked((int) mapPosition.x, (int) mapPosition.y)) {
             currentAppliedPhysics = tilePhysicsType;
-        }
+            entityIsMidAir = false;
+        } else entityIsMidAir = true;
     }
 
     /**
@@ -213,9 +219,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         // Unten
         blockedYBottom = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY) ||
                          gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY);
-        blockedYLadder = gameScreen.getMap()
-                                   .isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
-                                                     (int) newMapPositionY);
+        blockedYLadder = gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
+                                                              (int) newMapPositionY);
         // Oben
         blockedYTop = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY + entityMapHeight) ||
                       gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
@@ -228,9 +233,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
             jumpCount = 0;
         } else if (blockedYLadder && !entityIsOnLadder && requestedLadderDirection != LadderDirection.DOWN) {
             // Nur teleportieren, wenn auf dem oberen Ende der Leiter gelandet
-            if (!gameScreen.getMap()
-                           .isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
-                                             (int) gameScreen.getMap().convertToMapUnits(getY()))) {
+            if (!gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
+                                                      (int) gameScreen.getMap().convertToMapUnits(getY()))) {
                 int mapY = (int) gameScreen.getMap().convertToMapUnits(getY());
                 setY((int) gameScreen.getMap().convertToScreenUnits(mapY));
             }
