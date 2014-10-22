@@ -153,11 +153,15 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
      * Updated entityIsOnLadder
      */
     private void updateLadderFlag() {
-        Vector2 mapPosition = gameScreen.getMap().convertToMapPosition(new Vector2(getX() + getEntityWidth() / 2, getY()));
         float mapHeadYPos = gameScreen.getMap().convertToMapUnits(getY() + getEntityHeight() - 1);
+        float mapFeetYPos = gameScreen.getMap().convertToMapUnits(getY());
+        float leftAdjustedXPos = gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() * 0.25f);
+        float rightAdjustedXPos = gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() * 0.75f);
 
-        entityIsOnLadder = gameScreen.getMap().isTileLadderTile((int) mapPosition.x, (int) mapPosition.y) ||
-                           gameScreen.getMap().isTileLadderTile((int) mapPosition.x, (int) mapHeadYPos);
+        entityIsOnLadder = gameScreen.getMap().isTileLadderTile((int) leftAdjustedXPos, (int) mapFeetYPos) ||
+                           gameScreen.getMap().isTileLadderTile((int) leftAdjustedXPos, (int) mapHeadYPos) ||
+                           gameScreen.getMap().isTileLadderTile((int) rightAdjustedXPos, (int) mapFeetYPos) ||
+                           gameScreen.getMap().isTileLadderTile((int) rightAdjustedXPos, (int) mapHeadYPos);
     }
 
     /**
@@ -219,8 +223,12 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         // Unten
         blockedYBottom = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY) ||
                          gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY);
-        blockedYLadder = gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
-                                                              (int) newMapPositionY);
+
+        blockedYLadder =
+                gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() * 0.25f),
+                                                     (int) newMapPositionY) ||
+                gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() * 0.75f),
+                                                     (int) newMapPositionY);
         // Oben
         blockedYTop = gameScreen.getMap().isPositionBlocked((int) newMapPositionX, (int) newMapPositionY + entityMapHeight) ||
                       gameScreen.getMap().isPositionBlocked((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
@@ -232,8 +240,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
             currentSpeed.y = 0;
             jumpCount = 0;
         } else if (blockedYLadder && !entityIsOnLadder && requestedLadderDirection != LadderDirection.DOWN) {
-            // Nur teleportieren, wenn auf dem oberen Ende der Leiter gelandet
-            if (!gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() / 2),
+            // Nur teleportieren, wenn auf dem oberen Ende der Leiter gelandet -> nicht beim seitlichen Reinspringen
+            if (!gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() * 0.25f),
+                                                      (int) gameScreen.getMap().convertToMapUnits(getY())) &&
+                !gameScreen.getMap().isTileLadderTile((int) gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() * 0.75f),
                                                       (int) gameScreen.getMap().convertToMapUnits(getY()))) {
                 int mapY = (int) gameScreen.getMap().convertToMapUnits(getY());
                 setY((int) gameScreen.getMap().convertToScreenUnits(mapY));
