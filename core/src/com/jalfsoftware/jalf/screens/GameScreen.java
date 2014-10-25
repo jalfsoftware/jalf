@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
+import com.jalfsoftware.jalf.entities.Enemyredstickman001;
 import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.helper.Map;
 import com.jalfsoftware.jalf.services.ConsoleManager;
@@ -46,6 +47,7 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         // Gegnerliste initialisieren
         entityList = new ArrayList<AbstractEntity>();
+        entityList.add(new Enemyredstickman001(5 * UNITSCALE, 5 * UNITSCALE, this));
 
         // Poolable Entity List
         poolableEntityList = new ArrayList<AbstractEntity>();
@@ -104,6 +106,10 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         // Spieler rendern
         player.render(renderer.getSpriteBatch());
+
+        // Gegner rendern
+        for(AbstractEntity enemy : entityList)
+            enemy.render(renderer.getSpriteBatch());
 
         //Entitys rendern
         for (AbstractEntity entity : poolableEntityList)
