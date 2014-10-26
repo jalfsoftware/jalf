@@ -10,8 +10,8 @@ import com.jalfsoftware.jalf.screens.GameScreen;
  * Abstrakte Entitätsklasse mit Sprite
  */
 public abstract class AbstractEntity {
-    protected Sprite     sprite;
-    protected GameScreen gameScreen;
+    protected final Sprite     sprite;
+    protected final GameScreen gameScreen;
 
     public AbstractEntity(float xPos, float yPos, Texture texture, GameScreen gameScreen) {
         sprite = new Sprite(texture);

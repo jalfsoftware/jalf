@@ -36,7 +36,6 @@ public class OptionsScreen extends AbstractScreen {
 
         // Titel
         Label titleLabel = new Label("tbn", skin, "digital7-92", Color.WHITE);
-        //titleLabel.setFontScale(2);
         table.add(titleLabel).spaceBottom(5).align(1);
         table.row();
 
