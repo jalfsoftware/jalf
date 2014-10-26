@@ -8,7 +8,7 @@ import com.jalfsoftware.jalf.helper.Map;
 import com.jalfsoftware.jalf.screens.GameScreen;
 
 /**
- * Erweitert AbstractEntity um Lebenspunkte, Beschleunigung, Maximalgeschwindigkeit, Bewegung
+ * Erweitert AbstractEntity um Lebenspunkte, Beschleunigung, Maximalgeschwindigkeit, Bewegung (inklusive Kollisionsabfrage)
  */
 public abstract class AbstractLivingEntity extends AbstractEntity {
     public static final String LOG = AbstractLivingEntity.class.getSimpleName();
@@ -317,7 +317,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         return maxSpeed;
     }
 
-    public Vector2 getcurrentSpeed() {
+    public Vector2 getCurrentSpeed() {
         return currentSpeed;
     }
 

@@ -15,15 +15,15 @@ import java.util.List;
  * Die vom Spieler steuerbare Figur
  */
 public class Player extends AbstractLivingEntity implements InputProcessor {
-    List<EndOfMapReachedListener> listeners = new ArrayList<EndOfMapReachedListener>();
+    private List<EndOfMapReachedListener> listeners = new ArrayList<EndOfMapReachedListener>();
 
-    Vector2 spawnPosition;
-    int     lifes;
+    private Vector2 spawnPosition;
+    private int     lives;
 
-    public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lifes, float acceleration, float maxSpeed, float jumpSpeed,
+    public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lives, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
         super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
-        this.lifes = lifes;
+        this.lives = lives;
         spawnPosition = new Vector2(xPos, yPos);
     }
 
@@ -39,16 +39,15 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
         // Bei <=0 HP neu spawnen
         if (!isAlive()) {
             currentHealth = maxHealth;
-            lifes--;
-            if (lifes > 0) respawn();
+            lives--;
+            if (lives > 0) respawn();
             else gameScreen.playerDead();
         }
     }
 
     private void checkIfEndReached() {
-        if (gameScreen.getMap()
-                      .isPositionEndPosition(gameScreen.getMap().convertToMapUnits(getX()),
-                                             gameScreen.getMap().convertToMapUnits(getY()))) {
+        if (gameScreen.getMap().isPositionEndPosition(gameScreen.getMap().convertToMapUnits(getX()),
+                                                      gameScreen.getMap().convertToMapUnits(getY()))) {
             for (EndOfMapReachedListener listener : listeners) {
                 listener.mapEndReachedEventHandler();
             }
@@ -60,8 +59,8 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
         setPosition(spawnPosition.x, spawnPosition.y);
     }
 
-    public int getLifes() {
-        return lifes;
+    public int getLives() {
+        return lives;
     }
 
     @Override

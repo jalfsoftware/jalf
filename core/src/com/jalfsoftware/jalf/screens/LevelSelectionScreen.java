@@ -11,7 +11,7 @@ import com.jalfsoftware.jalf.helper.DefaultActorListener;
 import com.jalfsoftware.jalf.helper.Map;
 
 /**
- * Created by Flaiker on 27.09.2014.
+ * Screen zur Levelauswahl
  */
 public class LevelSelectionScreen extends AbstractScreen {
     public static final String LOG = LevelSelectionScreen.class.getSimpleName();
@@ -75,7 +75,6 @@ public class LevelSelectionScreen extends AbstractScreen {
 
         // Titel
         Label titleLabel = new Label("tbn", skin, "digital7-92", Color.WHITE);
-        //titleLabel.setFontScale(2);
         table.add(titleLabel).spaceBottom(5).align(1);
         table.row();
 

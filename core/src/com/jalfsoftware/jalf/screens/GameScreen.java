@@ -23,7 +23,7 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     private Player               player;
     private List<AbstractEntity> entityList;
     private long                 startTime;
-    private Label timeLabel, livesLabel;
+    private Label                timeLabel, livesLabel;
 
     public GameScreen(Jalf jalf, Map map) {
         super(jalf);
@@ -57,31 +57,33 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     public void show() {
         super.show();
 
-        //Game-Labels initialisieren
+        // Game-Labels initialisieren
         timeLabel.setFontScale(0.5f);
         timeLabel.setPosition(SCREEN_WIDTH - (timeLabel.getPrefWidth() * 3), SCREEN_HEIGHT - timeLabel.getPrefHeight());
         uiStage.addActor(timeLabel);
 
         livesLabel.setFontScale(0.5f);
         livesLabel.setPosition(SCREEN_WIDTH - (timeLabel.getPrefWidth() * 4) - livesLabel.getPrefWidth(),
-                SCREEN_HEIGHT - livesLabel.getPrefHeight());
+                               SCREEN_HEIGHT - livesLabel.getPrefHeight());
         uiStage.addActor(livesLabel);
     }
 
     @Override
     public void preUIrender(float delta) {
+        // Game-Labels updaten
         timeLabel.setText("Time: " + String.valueOf((System.currentTimeMillis() - startTime) / 1000));
         timeLabel.setPosition(0, uiStage.getHeight() - timeLabel.getPrefHeight() / 2);
 
-        livesLabel.setText("Lives: " + String.valueOf(player.getLifes()));
-        livesLabel.setPosition((uiStage.getWidth() / 2) - (livesLabel.getPrefWidth() / 2), uiStage.getHeight() - timeLabel.getPrefHeight() / 2);
+        livesLabel.setText("Lives: " + String.valueOf(player.getLives()));
+        livesLabel.setPosition((uiStage.getWidth() / 2) - (livesLabel.getPrefWidth() / 2),
+                               uiStage.getHeight() - timeLabel.getPrefHeight() / 2);
 
         // Kamera auf Spieler-X ausrichten, auf Map setzen und Map rendern
         float playerCenterPos = player.getX() + player.getEntityWidth() / 2;
         boolean playerOutLeft = playerCenterPos < (SCREEN_WIDTH / 2);
         boolean playerOutRight = playerCenterPos > (getMap().getMapWidthAsScreenUnits() - (SCREEN_WIDTH / 2));
 
-        if (!playerOutLeft &&! playerOutRight)
+        if (!playerOutLeft && !playerOutRight)
             camera.position.x = player.getX() + player.getEntityWidth() / 2;
         else {
             if (playerOutLeft) camera.position.x = SCREEN_WIDTH / 2;
@@ -117,6 +119,7 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     }
 
     public void playerDead() {
+        //TODO: Evtl. auf Observer-Pattern ändern
         jalf.setScreen(new LevelSelectionScreen(jalf));
     }
 }
