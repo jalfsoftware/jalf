@@ -58,6 +58,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         doCollisionDetectionHorizontal();
         doCollisionDetectionVertical();
         doOutOfMapDetectionBottom();
+        doItemDetectionHorizontal();
+        doItemDetectionVertical();
         updateLadderFlag();
     }
 
@@ -262,6 +264,66 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         // Neue Y-Position setzen
         setY(getY() + currentSpeed.y);
     }
+
+    private void doItemDetectionHorizontal() {
+        boolean item = false;
+
+        float entityMapWidth = gameScreen.getMap().convertToMapUnits(getEntityWidth());
+
+        int newMapPositionX = (int) gameScreen.getMap().convertToMapUnits(getX() + currentSpeed.x);
+
+        // Berührende TilehÃ¶hen an Kanten finden
+        // Unten
+        int yPosTileBottom = (int) gameScreen.getMap().convertToMapUnits(getY());
+        // Oben
+        int yPosTileTop = (int) gameScreen.getMap().convertToMapUnits(getY() + getEntityHeight() - 1);
+
+        if (currentSpeed.x > 0) {
+            for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
+                item = gameScreen.getMap().isPositionItemPosition((int) (newMapPositionX + entityMapWidth), i);
+                if (item) break;
+            }
+        } else if (currentSpeed.x < 0) {
+            for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
+                item = gameScreen.getMap().isPositionItemPosition(newMapPositionX, i);
+                if (item) break;
+            }
+        } else {
+            item = false;
+        }
+
+        if (item) {
+            System.out.println("item detected! <horizontal>");
+            System.out.println("---");
+        }
+    }
+    
+    private void doItemDetectionVertical() {
+        boolean itemYBottom, itemYTop;
+
+        int entityMapHeight = (int) gameScreen.getMap().convertToMapUnits(getEntityHeight());
+
+        float newMapPositionY = gameScreen.getMap().convertToMapUnits(getY() + currentSpeed.y);
+        float newMapPositionX = gameScreen.getMap().convertToMapUnits(getX());
+        float newMapPositionXRight = gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() - 1);
+
+        // Unten
+        itemYBottom = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY) ||
+                         gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY);
+        // Oben
+        itemYTop = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY + entityMapHeight) ||
+                      gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
+
+        if (itemYBottom) {
+            System.out.println("item detected! <vertical.bottom>");
+            System.out.println("---");
+        }
+        if (itemYTop) {
+            System.out.println("item detected! <vertical.top>");
+            System.out.println("---");
+        }
+    }
+    
 
     public void takeDamage(int damage) {
         currentHealth -= damage;

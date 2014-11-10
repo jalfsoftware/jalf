@@ -34,15 +34,19 @@ public class Map {
     private TiledMap                   map;
     private OrthogonalTiledMapRenderer renderer;
     private TiledMapTileLayer          collisionLayer;
+    private TiledMapTileLayer          fordergroundLayer;
     private MapLayer                   objectLayer;
 
     // Konstanten
     private static final String TILE_BLOCKED_KEY               = "blocked";
     private static final String COLLISION_LAYER_NAME           = "mgLayer";
+    private static final String FORDERGROUND_LAYER_NAME        = "fgLayer";
     private static final String OBJECT_LAYER_NAME              = "ojLayer";
     private static final String MAP_OBJECT_TILE_REFERENCE_NAME = "gid";
     private static final String TILE_PLAYER_SPAWN_KEY          = "playerSpawn";
     private static final String TILE_MAP_END_KEY               = "mapEnd";
+    private static final String TILE_MAP_ITEM                  = "item";
+    
 
     // Tilephysics-Private-Konstanten
     private static final String TILE_ICE_KEY    = "ice";
@@ -73,6 +77,7 @@ public class Map {
 
         // Layer finden
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(COLLISION_LAYER_NAME);
+        fordergroundLayer = (TiledMapTileLayer) map.getLayers().get(FORDERGROUND_LAYER_NAME);
         objectLayer = map.getLayers().get(OBJECT_LAYER_NAME);
 
         // Spawn-Positionen + Level-Enden finden
@@ -124,6 +129,11 @@ public class Map {
             }
         }
         return false;
+    }
+    //add
+    public boolean isPositionItemPosition(int x, int y) {
+       TiledMapTileLayer.Cell cell = fordergroundLayer.getCell(x, y);
+       return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_MAP_ITEM);
     }
 
     /**
