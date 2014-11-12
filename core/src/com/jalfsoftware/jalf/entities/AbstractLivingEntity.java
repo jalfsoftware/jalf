@@ -329,7 +329,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
             }
         }
     }
-    
+
 
     protected abstract void itemCoinPlus();
 
