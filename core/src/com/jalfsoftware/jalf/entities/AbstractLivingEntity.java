@@ -421,6 +421,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         return currentSpeed;
     }
 
+    public Direction getRequestedDirection() {
+        return requestedDirection;
+    }
+
     public static enum Direction {
         LEFT,
         RIGHT,
