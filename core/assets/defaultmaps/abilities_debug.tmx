@@ -1,58 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
-  <image source="tileset.png" width="256" height="256"/>
-  <tile id="0">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="2">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="8">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="9">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="24">
-   <properties>
-    <property name="item" value="speed"/>
-   </properties>
-  </tile>
-  <tile id="25">
-   <properties>
-    <property name="item" value="jump"/>
-   </properties>
-  </tile>
-  <tile id="26">
-   <properties>
-    <property name="item" value="fireball"/>
-   </properties>
-  </tile>
-  <tile id="27">
-   <properties>
-    <property name="item" value="hp"/>
-   </properties>
-  </tile>
-  <tile id="28">
-   <properties>
-    <property name="item" value="live"/>
-   </properties>
-  </tile>
-  <tile id="29">
-   <properties>
-    <property name="item" value="coin"/>
-   </properties>
-  </tile>
- </tileset>
+ <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="65" name="ojTileset" tilewidth="32" tileheight="32">
   <image source="ojTileset.png" width="256" height="256"/>
   <tile id="0">
@@ -73,16 +21,16 @@
  </layer>
  <layer name="mgLayer" width="100" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt1tEKgCAMhWFh3RS9//N2KyG6yWY2/g+GNyPFw8hS1rgX7QMd+foAANKRqpAX+QIAZvD/0JHX2utBPM1dt3p6b2Ley/Na93YoehDjMtYsMtU5jYVY1jxGM2OdN8/KwJrHaGY8vudxjr8ij72Qx17IYy8PoFUJvw==
+   eJztmEsKgCAURR00UVqGM/e/vwgaPC6a+auX3gOHSCjNm5oZM55wSXQQDDPRRIAjIX/DR+wJx0YZvfsfYR66YB51jBonzKOc1izuvmlluWusZwVa1/Bg0vsMB9qGembHwxHJ7eNkBtjvsv85Xz0jNybwvS9V3ofkOfPYoWyD89p/HfKa2P4mJbLSepOaYzRpFbThzWelcyn5ui2UeWiTeeiSeeiSefTzANRmI/s=
   </data>
  </layer>
  <layer name="fgLayer" width="100" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt00sKgDAMRdGuwLn1A93/Jp0oRAeVDtI8yD1QkmHg0lIAAAD8HNEH4CVzj/aZCjL3UEQPLfTQQg8t9PC3mr2afTP7fs+nx+l6EYDMlskPfbN70OUfPeJE/QdajKPFmAuL5Amh
+   eJzt07sKgDAMQNHMDu4+Qcj/f6OLohaJVGwi9B4IDoUgvVQEAACgDN0G/1B7jyX5Rqu9R5Qmmd25x+z9UxUajbNJeB9vDIX2qlx70OVeX3C3GoND99Ee677Te6cJAC+t88Dm3YMuz+gRJ+o90CIfLfKsbQQN6g==
   </data>
  </layer>
  <objectgroup name="ojLayer">
   <object gid="65" x="160" y="416"/>
-  <object gid="66" x="832" y="32"/>
+  <object gid="66" x="31" y="413"/>
  </objectgroup>
 </map>

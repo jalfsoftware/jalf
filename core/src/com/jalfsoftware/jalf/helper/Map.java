@@ -131,9 +131,13 @@ public class Map {
         return false;
     }
     //add
-    public boolean isPositionItemPosition(int x, int y) {
+    public Object isPositionItemPosition(int x, int y) {
        TiledMapTileLayer.Cell cell = fordergroundLayer.getCell(x, y);
-       return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_MAP_ITEM);
+       if (cell != null && cell.getTile() != null)
+    	   return cell.getTile().getProperties().get(TILE_MAP_ITEM);
+       else
+    	   return null;
+       //return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(TILE_MAP_ITEM);
     }
 
     /**
@@ -147,6 +151,10 @@ public class Map {
             if (cell.getTile().getProperties().containsKey(TILE_MUD_KEY)) return TilePhysicsType.MUD;
             return TilePhysicsType.NONE;
         } else return TilePhysicsType.NONE;
+    }
+    
+    public TiledMapTileLayer.Cell getFordergroundLayerCell(int x, int y) {
+    	return fordergroundLayer.getCell(x, y);
     }
 
     /**

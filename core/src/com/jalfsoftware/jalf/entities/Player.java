@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.jalfsoftware.jalf.helper.ItemJumpBoostThread;
+import com.jalfsoftware.jalf.helper.ItemSpeedBoostThread;
 import com.jalfsoftware.jalf.screens.GameScreen;
 
 import java.util.ArrayList;
@@ -61,6 +63,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
 
     public int getLives() {
         return lives;
+    }
+    protected void setLives(int lives) {
+         this.lives = lives;
     }
 
     @Override
@@ -161,4 +166,37 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
     public interface EndOfMapReachedListener {
         public void mapEndReachedEventHandler();
     }
+
+	@Override
+	protected void itemLivePlus() {
+		setLives(getLives() + 1);
+	}
+
+	@Override
+	protected void itemHpPlus() {
+		//setHealthPoints(getHealthPoints() + 1);
+	}
+
+	@Override
+	protected void itemCoinPlus() {
+		//setScore(getScore() + defineHowMuchPoinsGivesACoin)
+	}
+
+	@Override
+	protected void itemSetFireballAvalible() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void itemJumpBoost() {
+		Thread jumpBoost = new Thread (new ItemJumpBoostThread(this));
+		jumpBoost.start();	
+	}
+
+	@Override
+	protected void itemSpeedBoost() {
+		Thread speedBoost = new Thread (new ItemSpeedBoostThread(this));
+		speedBoost.start();		
+	}
 }

@@ -3,6 +3,8 @@ package com.jalfsoftware.jalf.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.jalfsoftware.jalf.helper.Map;
 import com.jalfsoftware.jalf.screens.GameScreen;
@@ -15,11 +17,13 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
     protected int currentHealth;
     protected int maxHealth;
+    protected int maxJumps = 2;
 
     protected float   acceleration;
     protected float   maxSpeed;
     protected float   jumpSpeed;
     protected Vector2 currentSpeed;
+    protected Abilities availableAbilities;
 
     private int jumpCount;
 
@@ -58,8 +62,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         doCollisionDetectionHorizontal();
         doCollisionDetectionVertical();
         doOutOfMapDetectionBottom();
-        doItemDetectionHorizontal();
-        doItemDetectionVertical();
+        //doItemDetectionHorizontal();
+        doItemDetection();
         updateLadderFlag();
     }
 
@@ -265,67 +269,117 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         setY(getY() + currentSpeed.y);
     }
 
-    private void doItemDetectionHorizontal() {
-        boolean item = false;
 
-        float entityMapWidth = gameScreen.getMap().convertToMapUnits(getEntityWidth());
-
-        int newMapPositionX = (int) gameScreen.getMap().convertToMapUnits(getX() + currentSpeed.x);
-
-        // Berührende TilehÃ¶hen an Kanten finden
-        // Unten
-        int yPosTileBottom = (int) gameScreen.getMap().convertToMapUnits(getY());
-        // Oben
-        int yPosTileTop = (int) gameScreen.getMap().convertToMapUnits(getY() + getEntityHeight() - 1);
-
-        if (currentSpeed.x > 0) {
-            for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
-                item = gameScreen.getMap().isPositionItemPosition((int) (newMapPositionX + entityMapWidth), i);
-                if (item) break;
-            }
-        } else if (currentSpeed.x < 0) {
-            for (int i = yPosTileBottom; i <= yPosTileTop; i++) {
-                item = gameScreen.getMap().isPositionItemPosition(newMapPositionX, i);
-                if (item) break;
-            }
-        } else {
-            item = false;
-        }
-
-        if (item) {
-            System.out.println("item detected! <horizontal>");
-            System.out.println("---");
-        }
-    }
-    
-    private void doItemDetectionVertical() {
-        boolean itemYBottom, itemYTop;
-
+    private void doItemDetection() {
+        //boolean itemYBottom, itemYTop;
+    	Object item = null;
+    	Object tmp = null;
+    	int[] itemPosition = new int [2];
+    	
         int entityMapHeight = (int) gameScreen.getMap().convertToMapUnits(getEntityHeight());
+        float entityMapWidth = gameScreen.getMap().convertToMapUnits(getEntityWidth());
 
         float newMapPositionY = gameScreen.getMap().convertToMapUnits(getY() + currentSpeed.y);
         float newMapPositionX = gameScreen.getMap().convertToMapUnits(getX());
         float newMapPositionXRight = gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() - 1);
 
-        // Unten
-        itemYBottom = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY) ||
-                         gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY);
-        // Oben
-        itemYTop = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY + entityMapHeight) ||
-                      gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
-
-        if (itemYBottom) {
-            System.out.println("item detected! <vertical.bottom>");
-            System.out.println("---");
+        // Unten vertikal
+        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY);
+        if (tmp != null) {
+        	item = tmp;
+        	itemPosition[0] = (int) newMapPositionX;
+        	itemPosition[1] = (int) newMapPositionY;
         }
-        if (itemYTop) {
-            System.out.println("item detected! <vertical.top>");
+        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY);
+        if (tmp != null) {
+        	item = tmp;
+        	itemPosition[0] = (int) newMapPositionXRight;
+        	itemPosition[1] = (int) newMapPositionY;
+        }
+        // Oben vertikal
+        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY + entityMapHeight);
+        if (tmp != null) {
+        	item = tmp;
+        	itemPosition[0] = (int) newMapPositionX;
+        	itemPosition[1] = (int) newMapPositionY + entityMapHeight;
+        }
+        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
+        if (tmp != null) {
+        	item = tmp;
+        	itemPosition[0] = (int) newMapPositionXRight;
+        	itemPosition[1] = (int) newMapPositionY + entityMapHeight;
+        }
+
+        //horizontal
+        if (currentSpeed.x > 0) {
+            for (int i = (int) newMapPositionY; i <= (int) newMapPositionY; i++) {
+                tmp = gameScreen.getMap().isPositionItemPosition((int) (newMapPositionX + entityMapWidth), i);
+                if (item != null) {
+                	item = tmp;
+                	itemPosition[0] = (int) (newMapPositionX + entityMapWidth);
+                	itemPosition[1] = i;
+                	break;
+                }
+            }
+        } else if (currentSpeed.x < 0) {
+            for (int i = (int) newMapPositionY; i <= (int) newMapPositionY; i++) {
+            	tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, i);
+                if (item != null) {
+                	item = tmp;
+                	itemPosition[0] = (int) newMapPositionX;
+                	itemPosition[1] = i;
+                	break;
+                }
+            }
+        }
+        
+        
+        if (item != null) {
+            System.out.println("item detected! " + item.toString());
             System.out.println("---");
+            // remove Tile
+            if (gameScreen.getMap().getFordergroundLayerCell(itemPosition[0], itemPosition[1]) != null)
+            	gameScreen.getMap().getFordergroundLayerCell(itemPosition[0], itemPosition[1]).setTile(null);
+
+            switch (item.toString()) {
+			case "speed":
+				itemSpeedBoost();
+				break;
+			case "jump":
+				itemJumpBoost();
+				break;
+			case "fireball":
+				itemSetFireballAvalible();
+				break;
+			case "hp":
+				itemHpPlus();
+				break;
+			case "live":
+				itemLivePlus();
+				break;
+			case "coin":
+				itemCoinPlus();
+				break;
+			default:
+				break;
+			}
         }
     }
     
 
-    public void takeDamage(int damage) {
+    protected abstract void itemCoinPlus();
+
+    protected abstract void itemSetFireballAvalible();
+
+	protected abstract void itemJumpBoost();
+
+	protected abstract void itemSpeedBoost();
+
+	protected abstract void itemLivePlus();
+
+    protected abstract void itemHpPlus();
+
+	public void takeDamage(int damage) {
         currentHealth -= damage;
     }
 
@@ -338,7 +392,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     }
 
     protected void jump() {
-        if (jumpCount < 2) {
+        if (jumpCount < maxJumps) {
             jumpCount++;
             currentSpeed.y = jumpSpeed;
         }
@@ -379,6 +433,26 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         return maxSpeed;
     }
 
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public float getMaxJumps() {
+        return maxJumps;
+    }
+
+    public void setMaxJumps(int maxJumps) {
+        this.maxJumps = maxJumps;
+    }
+
+    public float getJumpSpeed() {
+        return jumpSpeed;
+    }
+
+    public void setJumpSpeed(float jumpSpeed) {
+        this.jumpSpeed = jumpSpeed;
+    }
+
     public Vector2 getCurrentSpeed() {
         return currentSpeed;
     }
@@ -393,5 +467,13 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         UP,
         DOWN,
         NONE
+    }
+    public enum Abilities {
+    	SPEET,
+    	JUMP,
+    	FIREBALL,
+    	HP,
+    	LIVE,
+    	COIN
     }
 }
