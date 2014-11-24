@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Pool;
 import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
+import com.jalfsoftware.jalf.entities.AbstractProjectileEntity;
+import com.jalfsoftware.jalf.entities.Fireball;
 import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.helper.Map;
 
@@ -22,6 +25,7 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     private Map                  map;
     private Player               player;
     private List<AbstractEntity> entityList;
+    private List<AbstractEntity> poolableEntityList;
     private long                 startTime;
     private Label                timeLabel, livesLabel;
 
@@ -43,11 +47,15 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         // Gegnerliste initialisieren
         entityList = new ArrayList<AbstractEntity>();
+        
+        // Poolable Entity List
+        poolableEntityList = new ArrayList<AbstractEntity>();
 
         // Startzeit festlegen
         startTime = System.currentTimeMillis();
         Gdx.input.setInputProcessor(player);
     }
+    
 
     private long getTimeSinceStart() {
         return System.currentTimeMillis() - startTime;
@@ -99,6 +107,10 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         // Spieler rendern
         player.render(renderer.getSpriteBatch());
+        
+        //Entitys rendern
+        for (AbstractEntity entity : poolableEntityList)
+        	entity.render(renderer.getSpriteBatch());
 
         renderer.getSpriteBatch().end();
     }
@@ -121,5 +133,15 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     public void playerDead() {
         //TODO: Evtl. auf Observer-Pattern ändern
         jalf.setScreen(new LevelSelectionScreen(jalf));
+    }
+    
+    public void addEntityToRenderLoop(AbstractEntity entity) {
+    	entityList.add(entity);
+    	System.out.println(entityList.size() + "Entities will be rendered...");
+    }
+
+    public void addPoolableEntityToRenderLoop(AbstractEntity entity) {
+    	poolableEntityList.add(entity);
+    	//System.out.println(poolableEntityList.size() + "Poolable Entities will be rendered...");
     }
 }

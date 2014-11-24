@@ -3,8 +3,7 @@ package com.jalfsoftware.jalf.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.jalfsoftware.jalf.helper.Map;
 import com.jalfsoftware.jalf.screens.GameScreen;
@@ -23,11 +22,12 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     protected float   maxSpeed;
     protected float   jumpSpeed;
     protected Vector2 currentSpeed;
-    protected Abilities availableAbilities;
+    protected Boolean fireballAvalible;
 
     private int jumpCount;
 
     private Direction           requestedDirection;
+    protected Direction           lastXDirection;
     private LadderDirection     requestedLadderDirection;
     private Map.TilePhysicsType currentAppliedPhysics;
     private boolean             entityIsOnLadder;
@@ -42,6 +42,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
         this.jumpSpeed = jumpSpeed;
+        this.fireballAvalible = false;
 
         jumpCount = 0;
         currentSpeed = new Vector2(0, 0);
@@ -49,6 +50,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         entityIsMidAir = false;
 
         requestedDirection = Direction.NONE;
+        lastXDirection = Direction.NONE;
         requestedLadderDirection = LadderDirection.NONE;
         currentAppliedPhysics = Map.TilePhysicsType.NONE;
     }
@@ -62,12 +64,19 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         doCollisionDetectionHorizontal();
         doCollisionDetectionVertical();
         doOutOfMapDetectionBottom();
-        //doItemDetectionHorizontal();
         doItemDetection();
         updateLadderFlag();
+        updateLastXDirection();
     }
 
-    /**
+    private void updateLastXDirection() {
+		if (currentSpeed.x > 0)
+			lastXDirection = Direction.RIGHT;
+		else if (currentSpeed.x < 0)
+			lastXDirection = Direction.LEFT;
+	}
+
+	/**
      * Entity verliert Leben, wenn sie aus der Map fällt
      */
     private void doOutOfMapDetectionBottom() {
@@ -271,77 +280,34 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
 
     private void doItemDetection() {
-        //boolean itemYBottom, itemYTop;
-    	Object item = null;
-    	Object tmp = null;
-    	int[] itemPosition = new int [2];
-    	
-        int entityMapHeight = (int) gameScreen.getMap().convertToMapUnits(getEntityHeight());
-        float entityMapWidth = gameScreen.getMap().convertToMapUnits(getEntityWidth());
-
-        float newMapPositionY = gameScreen.getMap().convertToMapUnits(getY() + currentSpeed.y);
-        float newMapPositionX = gameScreen.getMap().convertToMapUnits(getX());
-        float newMapPositionXRight = gameScreen.getMap().convertToMapUnits(getX() + getEntityWidth() - 1);
-
-        // Unten vertikal
-        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY);
-        if (tmp != null) {
-        	item = tmp;
-        	itemPosition[0] = (int) newMapPositionX;
-        	itemPosition[1] = (int) newMapPositionY;
+    	//Rectangle player = new Rectangle();
+    	float entityLeftBotX = gameScreen.getMap().convertToMapUnits(getX());
+    	float entityLeftBotY = gameScreen.getMap().convertToMapUnits(getY());
+    	float entityHeight = gameScreen.getMap().convertToMapUnits(getEntityHeight());
+        float entityWidth = gameScreen.getMap().convertToMapUnits(getEntityWidth());
+        String item = null;
+        Vector2 itemPosition = new Vector2();
+ 
+        for (float x = entityLeftBotX; x <= entityLeftBotX + entityWidth; x++) {
+        	for (float y = entityLeftBotY; y <= entityLeftBotY + entityHeight; y++) {
+        		if (gameScreen.getMap().isPositionItemPosition((int) x,(int) y) != null) {
+        			item = gameScreen.getMap().isPositionItemPosition((int) x,(int) y);
+        			itemPosition.set(x, y);
+        			break;
+        		}
+        		//System.out.println("coords: " + x + " " + y);
+        	}
         }
-        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY);
-        if (tmp != null) {
-        	item = tmp;
-        	itemPosition[0] = (int) newMapPositionXRight;
-        	itemPosition[1] = (int) newMapPositionY;
-        }
-        // Oben vertikal
-        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, (int) newMapPositionY + entityMapHeight);
-        if (tmp != null) {
-        	item = tmp;
-        	itemPosition[0] = (int) newMapPositionX;
-        	itemPosition[1] = (int) newMapPositionY + entityMapHeight;
-        }
-        tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionXRight, (int) newMapPositionY + entityMapHeight);
-        if (tmp != null) {
-        	item = tmp;
-        	itemPosition[0] = (int) newMapPositionXRight;
-        	itemPosition[1] = (int) newMapPositionY + entityMapHeight;
-        }
-
-        //horizontal
-        if (currentSpeed.x > 0) {
-            for (int i = (int) newMapPositionY; i <= (int) newMapPositionY; i++) {
-                tmp = gameScreen.getMap().isPositionItemPosition((int) (newMapPositionX + entityMapWidth), i);
-                if (item != null) {
-                	item = tmp;
-                	itemPosition[0] = (int) (newMapPositionX + entityMapWidth);
-                	itemPosition[1] = i;
-                	break;
-                }
-            }
-        } else if (currentSpeed.x < 0) {
-            for (int i = (int) newMapPositionY; i <= (int) newMapPositionY; i++) {
-            	tmp = gameScreen.getMap().isPositionItemPosition((int) newMapPositionX, i);
-                if (item != null) {
-                	item = tmp;
-                	itemPosition[0] = (int) newMapPositionX;
-                	itemPosition[1] = i;
-                	break;
-                }
-            }
-        }
-        
+             
         
         if (item != null) {
             System.out.println("item detected! " + item.toString());
             System.out.println("---");
             // remove Tile
-            if (gameScreen.getMap().getFordergroundLayerCell(itemPosition[0], itemPosition[1]) != null)
-            	gameScreen.getMap().getFordergroundLayerCell(itemPosition[0], itemPosition[1]).setTile(null);
+            if (gameScreen.getMap().getForegroundLayerCell((int) itemPosition.x, (int) itemPosition.y) != null)
+            	gameScreen.getMap().getForegroundLayerCell((int) itemPosition.x, (int) itemPosition.y).setTile(null);
 
-            switch (item.toString()) {
+            switch (item) {
 			case "speed":
 				itemSpeedBoost();
 				break;
@@ -467,13 +433,5 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         UP,
         DOWN,
         NONE
-    }
-    public enum Abilities {
-    	SPEET,
-    	JUMP,
-    	FIREBALL,
-    	HP,
-    	LIVE,
-    	COIN
     }
 }

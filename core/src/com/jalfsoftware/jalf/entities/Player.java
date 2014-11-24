@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
+import com.jalfsoftware.jalf.entities.AbstractLivingEntity.Direction;
 import com.jalfsoftware.jalf.helper.ItemJumpBoostThread;
 import com.jalfsoftware.jalf.helper.ItemSpeedBoostThread;
 import com.jalfsoftware.jalf.screens.GameScreen;
@@ -58,6 +60,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
 
     private void respawn() {
         resetSpeed();
+        fireballAvalible = false;
         setPosition(spawnPosition.x, spawnPosition.y);
     }
 
@@ -97,6 +100,11 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
                 break;
             case Input.Keys.R:
                 respawn();
+                break;
+            case Input.Keys.E:
+            	if (fireballAvalible) {
+	                gameScreen.addPoolableEntityToRenderLoop(new Fireball(getX(), getY(), gameScreen, lastXDirection, getEntityHeight()));
+            	}
                 break;
         }
         return keyProcessed;
@@ -184,8 +192,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
 
 	@Override
 	protected void itemSetFireballAvalible() {
-		// TODO Auto-generated method stub
-		
+		this.fireballAvalible = true;		
 	}
 
 	@Override
