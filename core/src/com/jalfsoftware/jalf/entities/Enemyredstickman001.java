@@ -4,12 +4,14 @@ package com.jalfsoftware.jalf.entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.jalfsoftware.jalf.screens.GameScreen;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * Created by Anton Löwen on 25.10.2014.
  */
 
 public class Enemyredstickman001 extends AbstractLivingEntity{
-
+    private CopyOnWriteArrayList EntityList;
     public Enemyredstickman001(float xPos, float yPos, GameScreen gameScreen) {
         super(xPos + 10, yPos + 250, "jalf_Stand", 10, 10, 15, 3, 5, gameScreen);
         //TODO: jonathan, Gegnertexture in Textureatlas, Zeile drüber Name ersetzen
@@ -67,5 +69,15 @@ public class Enemyredstickman001 extends AbstractLivingEntity{
     protected void itemHpPlus() {
         //TODO: Lukas???
     }
+    
+    void doDeathDetection(){
+        if(currentHealth <= 0){
+            deleteMe();
+        }
+    }
+    void deleteMe(){
+        gameScreen.deleteEntity();
+    }
 
 }
+
