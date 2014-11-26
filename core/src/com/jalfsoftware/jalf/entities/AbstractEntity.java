@@ -29,6 +29,10 @@ public abstract class AbstractEntity {
         sprite.setPosition(x, y);
     }
 
+    protected void setRotation(float rotation) {
+        sprite.setRotation(rotation);
+    }
+
     protected void setX(float x) {
         sprite.setX(x);
     }
