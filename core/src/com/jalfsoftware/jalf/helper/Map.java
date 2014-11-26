@@ -40,13 +40,13 @@ public class Map {
     // Konstanten
     private static final String TILE_BLOCKED_KEY               = "blocked";
     private static final String COLLISION_LAYER_NAME           = "mgLayer";
-    private static final String FOREGROUND_LAYER_NAME     	   = "fgLayer";
+    private static final String FOREGROUND_LAYER_NAME          = "fgLayer";
     private static final String OBJECT_LAYER_NAME              = "ojLayer";
     private static final String MAP_OBJECT_TILE_REFERENCE_NAME = "gid";
     private static final String TILE_PLAYER_SPAWN_KEY          = "playerSpawn";
     private static final String TILE_MAP_END_KEY               = "mapEnd";
     private static final String TILE_MAP_ITEM                  = "item";
-    
+
 
     // Tilephysics-Private-Konstanten
     private static final String TILE_ICE_KEY    = "ice";
@@ -130,13 +130,13 @@ public class Map {
         }
         return false;
     }
+
     //add
     public String isPositionItemPosition(int x, int y) {
-       TiledMapTileLayer.Cell cell = foregroundLayer.getCell(x, y);
-       if (cell != null && cell.getTile() != null && cell.getTile().getProperties().get(TILE_MAP_ITEM) != null)
-    	   return cell.getTile().getProperties().get(TILE_MAP_ITEM).toString();
-       else
-    	   return null;
+        TiledMapTileLayer.Cell cell = foregroundLayer.getCell(x, y);
+        if (cell != null && cell.getTile() != null && cell.getTile().getProperties().get(TILE_MAP_ITEM) != null)
+            return cell.getTile().getProperties().get(TILE_MAP_ITEM).toString();
+        else return null;
     }
 
     /**
@@ -151,9 +151,9 @@ public class Map {
             return TilePhysicsType.NONE;
         } else return TilePhysicsType.NONE;
     }
-    
+
     public TiledMapTileLayer.Cell getForegroundLayerCell(int x, int y) {
-    	return foregroundLayer.getCell(x, y);
+        return foregroundLayer.getCell(x, y);
     }
 
     /**
@@ -245,8 +245,8 @@ public class Map {
     public enum TilePhysicsType {
         NONE, MUD, ICE
     }
-    
+
     public TiledMapTileLayer getForegroudLayer() {
-		return foregroundLayer;
-	}
+        return foregroundLayer;
+    }
 }

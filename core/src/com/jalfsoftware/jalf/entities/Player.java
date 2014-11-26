@@ -102,9 +102,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
                 respawn();
                 break;
             case Input.Keys.E:
-            	if (fireballAvalible) {
-	                gameScreen.addPoolableEntityToRenderLoop(new Fireball(getX(), getY(), gameScreen, lastXDirection, getEntityHeight()));
-            	}
+                if (fireballAvalible) {
+                    gameScreen.addPoolableEntityToRenderLoop(new Fireball(getX(), getY(), gameScreen, lastXDirection, getEntityHeight()));
+                }
                 break;
         }
         return keyProcessed;
@@ -175,35 +175,35 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
         public void mapEndReachedEventHandler();
     }
 
-	@Override
-	protected void itemLivePlus() {
-		setLives(getLives() + 1);
-	}
+    @Override
+    protected void itemLivePlus() {
+        setLives(getLives() + 1);
+    }
 
-	@Override
-	protected void itemHpPlus() {
-		//setHealthPoints(getHealthPoints() + 1);
-	}
+    @Override
+    protected void itemHpPlus() {
+        //setHealthPoints(getHealthPoints() + 1);
+    }
 
-	@Override
-	protected void itemCoinPlus() {
-		//setScore(getScore() + defineHowMuchPoinsGivesACoin)
-	}
+    @Override
+    protected void itemCoinPlus() {
+        //setScore(getScore() + defineHowMuchPoinsGivesACoin)
+    }
 
-	@Override
-	protected void itemSetFireballAvalible() {
-		this.fireballAvalible = true;		
-	}
+    @Override
+    protected void itemSetFireballAvalible() {
+        this.fireballAvalible = true;
+    }
 
-	@Override
-	protected void itemJumpBoost() {
-		Thread jumpBoost = new Thread (new ItemJumpBoostThread(this));
-		jumpBoost.start();	
-	}
+    @Override
+    protected void itemJumpBoost() {
+        Thread jumpBoost = new Thread(new ItemJumpBoostThread(this));
+        jumpBoost.start();
+    }
 
-	@Override
-	protected void itemSpeedBoost() {
-		Thread speedBoost = new Thread (new ItemSpeedBoostThread(this));
-		speedBoost.start();		
-	}
+    @Override
+    protected void itemSpeedBoost() {
+        Thread speedBoost = new Thread(new ItemSpeedBoostThread(this));
+        speedBoost.start();
+    }
 }

@@ -107,10 +107,10 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         // Spieler rendern
         player.render(renderer.getSpriteBatch());
-        
+
         //Entitys rendern
         for (AbstractEntity entity : poolableEntityList)
-        	entity.render(renderer.getSpriteBatch());
+            entity.render(renderer.getSpriteBatch());
 
         renderer.getSpriteBatch().end();
     }
@@ -134,14 +134,14 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         //TODO: Evtl. auf Observer-Pattern ändern
         jalf.setScreen(new LevelSelectionScreen(jalf));
     }
-    
+
     public void addEntityToRenderLoop(AbstractEntity entity) {
-    	entityList.add(entity);
-    	System.out.println(entityList.size() + "Entities will be rendered...");
+        entityList.add(entity);
+        System.out.println(entityList.size() + "Entities will be rendered...");
     }
 
     public void addPoolableEntityToRenderLoop(AbstractEntity entity) {
-    	poolableEntityList.add(entity);
-    	//System.out.println(poolableEntityList.size() + "Poolable Entities will be rendered...");
+        poolableEntityList.add(entity);
+        //System.out.println(poolableEntityList.size() + "Poolable Entities will be rendered...");
     }
 }

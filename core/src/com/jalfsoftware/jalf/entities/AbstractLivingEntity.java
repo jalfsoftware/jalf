@@ -70,13 +70,11 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     }
 
     private void updateLastXDirection() {
-		if (currentSpeed.x > 0)
-			lastXDirection = Direction.RIGHT;
-		else if (currentSpeed.x < 0)
-			lastXDirection = Direction.LEFT;
-	}
+        if (currentSpeed.x > 0) lastXDirection = Direction.RIGHT;
+        else if (currentSpeed.x < 0) lastXDirection = Direction.LEFT;
+    }
 
-	/**
+    /**
      * Entity verliert Leben, wenn sie aus der Map fällt
      */
     private void doOutOfMapDetectionBottom() {
@@ -280,55 +278,55 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 
 
     private void doItemDetection() {
-    	//Rectangle player = new Rectangle();
-    	float entityLeftBotX = gameScreen.getMap().convertToMapUnits(getX());
-    	float entityLeftBotY = gameScreen.getMap().convertToMapUnits(getY());
-    	float entityHeight = gameScreen.getMap().convertToMapUnits(getEntityHeight());
+        //Rectangle player = new Rectangle();
+        float entityLeftBotX = gameScreen.getMap().convertToMapUnits(getX());
+        float entityLeftBotY = gameScreen.getMap().convertToMapUnits(getY());
+        float entityHeight = gameScreen.getMap().convertToMapUnits(getEntityHeight());
         float entityWidth = gameScreen.getMap().convertToMapUnits(getEntityWidth());
         String item = null;
         Vector2 itemPosition = new Vector2();
- 
+
         for (float x = entityLeftBotX; x <= entityLeftBotX + entityWidth; x++) {
-        	for (float y = entityLeftBotY; y <= entityLeftBotY + entityHeight; y++) {
-        		if (gameScreen.getMap().isPositionItemPosition((int) x,(int) y) != null) {
-        			item = gameScreen.getMap().isPositionItemPosition((int) x,(int) y);
-        			itemPosition.set(x, y);
-        			break;
-        		}
-        		//System.out.println("coords: " + x + " " + y);
-        	}
+            for (float y = entityLeftBotY; y <= entityLeftBotY + entityHeight; y++) {
+                if (gameScreen.getMap().isPositionItemPosition((int) x, (int) y) != null) {
+                    item = gameScreen.getMap().isPositionItemPosition((int) x, (int) y);
+                    itemPosition.set(x, y);
+                    break;
+                }
+                //System.out.println("coords: " + x + " " + y);
+            }
         }
-             
-        
+
+
         if (item != null) {
             System.out.println("item detected! " + item.toString());
             System.out.println("---");
             // remove Tile
             if (gameScreen.getMap().getForegroundLayerCell((int) itemPosition.x, (int) itemPosition.y) != null)
-            	gameScreen.getMap().getForegroundLayerCell((int) itemPosition.x, (int) itemPosition.y).setTile(null);
+                gameScreen.getMap().getForegroundLayerCell((int) itemPosition.x, (int) itemPosition.y).setTile(null);
 
             switch (item) {
-			case "speed":
-				itemSpeedBoost();
-				break;
-			case "jump":
-				itemJumpBoost();
-				break;
-			case "fireball":
-				itemSetFireballAvalible();
-				break;
-			case "hp":
-				itemHpPlus();
-				break;
-			case "live":
-				itemLivePlus();
-				break;
-			case "coin":
-				itemCoinPlus();
-				break;
-			default:
-				break;
-			}
+                case "speed":
+                    itemSpeedBoost();
+                    break;
+                case "jump":
+                    itemJumpBoost();
+                    break;
+                case "fireball":
+                    itemSetFireballAvalible();
+                    break;
+                case "hp":
+                    itemHpPlus();
+                    break;
+                case "live":
+                    itemLivePlus();
+                    break;
+                case "coin":
+                    itemCoinPlus();
+                    break;
+                default:
+                    break;
+            }
         }
     }
     
