@@ -17,7 +17,7 @@ public class Enemyredstickman001 extends AbstractLivingEntity{
 
     @Override
     public void render(Batch batch){
-    super.render(batch);
+        super.render(batch);
 
         switch (lastXDirection) {
             case LEFT:
@@ -69,4 +69,3 @@ public class Enemyredstickman001 extends AbstractLivingEntity{
     }
 
 }
-

@@ -155,4 +155,8 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         return outList;
     }
+
+    public void deleteEntity(){
+        entityList.remove(entityList.get(0));
+    }
 }
