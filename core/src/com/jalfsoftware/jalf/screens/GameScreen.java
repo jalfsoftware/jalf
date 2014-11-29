@@ -4,11 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Pool;
 import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
-import com.jalfsoftware.jalf.entities.AbstractProjectileEntity;
-import com.jalfsoftware.jalf.entities.Fireball;
 import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.helper.Map;
 
@@ -44,18 +41,17 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         // Spieler initialisieren
         player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 3, 15, 3, 5, this);
         player.addListener(this);
+        addInputProcessor(player);
 
         // Gegnerliste initialisieren
         entityList = new ArrayList<AbstractEntity>();
-        
+
         // Poolable Entity List
         poolableEntityList = new ArrayList<AbstractEntity>();
 
         // Startzeit festlegen
         startTime = System.currentTimeMillis();
-        Gdx.input.setInputProcessor(player);
     }
-    
 
     private long getTimeSinceStart() {
         return System.currentTimeMillis() - startTime;
