@@ -58,7 +58,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
         }
     }
 
-    private void respawn() {
+    public void respawn() {
         resetSpeed();
         fireballAvalible = false;
         setPosition(spawnPosition.x, spawnPosition.y);

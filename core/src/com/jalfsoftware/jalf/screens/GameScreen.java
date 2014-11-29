@@ -4,21 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Pool;
 import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
-import com.jalfsoftware.jalf.entities.AbstractProjectileEntity;
-import com.jalfsoftware.jalf.entities.Fireball;
 import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.helper.Map;
+import com.jalfsoftware.jalf.services.ConsoleManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Screen zur Darstellung des Spiels
  */
-public class GameScreen extends AbstractScreen implements Player.EndOfMapReachedListener {
+public class GameScreen extends AbstractScreen implements Player.EndOfMapReachedListener, ConsoleManager.CommandableScreen {
     public static final float UNITSCALE            = 0.75f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
     public static final float GRAVITATION_CONSTANT = 0.2f;
 
@@ -44,18 +43,17 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         // Spieler initialisieren
         player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 3, 15, 3, 5, this);
         player.addListener(this);
+        addInputProcessor(player);
 
         // Gegnerliste initialisieren
         entityList = new ArrayList<AbstractEntity>();
-        
+
         // Poolable Entity List
         poolableEntityList = new ArrayList<AbstractEntity>();
 
         // Startzeit festlegen
         startTime = System.currentTimeMillis();
-        Gdx.input.setInputProcessor(player);
     }
-    
 
     private long getTimeSinceStart() {
         return System.currentTimeMillis() - startTime;
@@ -143,5 +141,15 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     public void addPoolableEntityToRenderLoop(AbstractEntity entity) {
         poolableEntityList.add(entity);
         //System.out.println(poolableEntityList.size() + "Poolable Entities will be rendered...");
+    }
+
+    @Override
+    public void addScreenConsoleCommand(ConsoleManager consoleManager) {
+        consoleManager.addCommand(new ConsoleManager.ConsoleCommand("respawn", new ConsoleManager.CommandExecutor() {
+            @Override
+            public void OnCommandFired(HashMap<String, String> parValuePairs) {
+                player.respawn();
+            }
+        }));
     }
 }
