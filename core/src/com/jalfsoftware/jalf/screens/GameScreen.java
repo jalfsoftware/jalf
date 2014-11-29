@@ -8,14 +8,16 @@ import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
 import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.helper.Map;
+import com.jalfsoftware.jalf.services.ConsoleManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Screen zur Darstellung des Spiels
  */
-public class GameScreen extends AbstractScreen implements Player.EndOfMapReachedListener {
+public class GameScreen extends AbstractScreen implements Player.EndOfMapReachedListener, ConsoleManager.CommandableScreen {
     public static final float UNITSCALE            = 0.75f; // Skalierungskonstante für die Darstellung von Maps und Entitäten
     public static final float GRAVITATION_CONSTANT = 0.2f;
 
@@ -139,5 +141,15 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     public void addPoolableEntityToRenderLoop(AbstractEntity entity) {
         poolableEntityList.add(entity);
         //System.out.println(poolableEntityList.size() + "Poolable Entities will be rendered...");
+    }
+
+    @Override
+    public void addScreenConsoleCommand(ConsoleManager consoleManager) {
+        consoleManager.addCommand(new ConsoleManager.ConsoleCommand("respawn", new ConsoleManager.CommandExecutor() {
+            @Override
+            public void OnCommandFired(HashMap<String, String> parValuePairs) {
+                player.respawn();
+            }
+        }));
     }
 }

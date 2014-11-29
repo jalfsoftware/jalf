@@ -22,8 +22,8 @@ import com.jalfsoftware.jalf.Jalf;
 public abstract class AbstractScreen implements Screen {
     public static final String LOG = AbstractScreen.class.getSimpleName();
 
-    protected static final float SCREEN_WIDTH  = 800;
-    protected static final float SCREEN_HEIGHT = 480;
+    public static final float SCREEN_WIDTH  = 800;
+    public static final float SCREEN_HEIGHT = 480;
 
     protected final Stage              uiStage; // Stage zum Hosten von UI-Elementen
     protected final Skin               skin; // Skin mit visueller Darstellung des UI
@@ -68,6 +68,7 @@ public abstract class AbstractScreen implements Screen {
     private void setDebugConsoleVisibility(boolean visible) {
         debugConsole.setVisible(visible);
         if(visible) {
+            debugConsole.setText("");
             tempProcessorList = new Array<>();
             tempProcessorList.addAll(inputMultiplexer.getProcessors());
             inputMultiplexer.clear();
@@ -106,7 +107,7 @@ public abstract class AbstractScreen implements Screen {
                     setDebugConsoleVisibility(false);
                     event.cancel();
                 } else if(keycode == Input.Keys.ENTER) {
-                    //TODO: jalf.getConsoleManager().submit(debugConsole.getText());
+                    jalf.getConsoleManager().submitConsoleString(debugConsole.getText());
                 }
                 return super.keyDown(event, keycode);
             }
