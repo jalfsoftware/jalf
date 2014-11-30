@@ -2,15 +2,12 @@ package com.jalfsoftware.jalf;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
 import com.jalfsoftware.jalf.screens.AbstractScreen;
 import com.jalfsoftware.jalf.screens.MenuScreen;
 import com.jalfsoftware.jalf.services.ConsoleManager;
 import com.jalfsoftware.jalf.services.PreferencesManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -112,7 +109,7 @@ public class Jalf extends Game {
     public void setScreen(Screen screen) {
         super.setScreen(screen);
         initializeConsoleCommands();
-        if (screen instanceof ConsoleManager.CommandableScreen)
-            ((ConsoleManager.CommandableScreen) screen).addScreenConsoleCommand(consoleManager);
+        if (screen instanceof ConsoleManager.CommandableInstance)
+            consoleManager.addCommands(((ConsoleManager.CommandableInstance) screen).getConsoleCommands());
     }
 }

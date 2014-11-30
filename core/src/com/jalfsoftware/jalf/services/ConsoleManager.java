@@ -14,6 +14,10 @@ public class ConsoleManager {
         commandList.add(command);
     }
 
+    public void addCommands(List<ConsoleCommand> consoleCommandList) {
+        commandList.addAll(consoleCommandList);
+    }
+
     public void clearCommands() {
         commandList.clear();
     }
@@ -63,7 +67,7 @@ public class ConsoleManager {
         public void OnCommandFired(HashMap<String, String> parValuePairs);
     }
 
-    public interface CommandableScreen {
-        public void addScreenConsoleCommand(ConsoleManager consoleManager);
+    public interface CommandableInstance {
+        public List<ConsoleCommand> getConsoleCommands();
     }
 }
