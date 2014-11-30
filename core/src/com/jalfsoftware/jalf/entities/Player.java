@@ -11,14 +11,16 @@ import com.jalfsoftware.jalf.entities.AbstractLivingEntity.Direction;
 import com.jalfsoftware.jalf.helper.ItemJumpBoostThread;
 import com.jalfsoftware.jalf.helper.ItemSpeedBoostThread;
 import com.jalfsoftware.jalf.screens.GameScreen;
+import com.jalfsoftware.jalf.services.ConsoleManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Die vom Spieler steuerbare Figur
  */
-public class Player extends AbstractLivingEntity implements InputProcessor {
+public class Player extends AbstractLivingEntity implements InputProcessor, ConsoleManager.CommandableInstance {
     private List<EndOfMapReachedListener> listeners = new ArrayList<EndOfMapReachedListener>();
 
     private Vector2 spawnPosition;
@@ -58,7 +60,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
         }
     }
 
-    public void respawn() {
+    private void respawn() {
         resetSpeed();
         fireballAvalible = false;
         setPosition(spawnPosition.x, spawnPosition.y);
@@ -169,6 +171,63 @@ public class Player extends AbstractLivingEntity implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    @Override
+    public List<ConsoleManager.ConsoleCommand> getConsoleCommands() {
+        List<ConsoleManager.ConsoleCommand> outList = new ArrayList<>();
+        outList.add(new ConsoleManager.ConsoleCommand("respawn", new ConsoleManager.CommandExecutor() {
+            @Override
+            public void OnCommandFired(HashMap<String, String> parValuePairs) {
+                respawn();
+            }
+        }));
+
+        outList.add(new ConsoleManager.ConsoleCommand("setlives", new ConsoleManager.CommandExecutor() {
+            @Override
+            public void OnCommandFired(HashMap<String, String> parValuePairs) {
+                if (parValuePairs.containsKey("val")) {
+                    int newLifeCount;
+                    try {
+                        newLifeCount = Integer.parseInt(parValuePairs.get("val"));
+                    } catch (NumberFormatException e) {
+                        Gdx.app.log(LOG, "val is not an int");
+                        return;
+                    }
+                    setLives(newLifeCount);
+                }
+            }
+        }));
+
+        outList.add(new ConsoleManager.ConsoleCommand("tp", new ConsoleManager.CommandExecutor() {
+            @Override
+            public void OnCommandFired(HashMap<String, String> parValuePairs) {
+                float x = gameScreen.getMap().convertToMapUnits(getX());
+                float y = gameScreen.getMap().convertToMapUnits(getY());
+
+                if (parValuePairs.containsKey("x")) {
+                    try {
+                        x = Float.parseFloat(parValuePairs.get("x"));
+                    } catch (NumberFormatException e) {
+                        Gdx.app.log(LOG, "x is not a float");
+                        return;
+                    }
+                }
+
+                if (parValuePairs.containsKey("y")) {
+                    try {
+                        y = Float.parseFloat(parValuePairs.get("y"));
+                    } catch (NumberFormatException e) {
+                        Gdx.app.log(LOG, "y is not a float");
+                        return;
+                    }
+                }
+
+                setPosition(gameScreen.getMap().convertToScreenUnits(x), gameScreen.getMap().convertToScreenUnits(y));
+            }
+        }));
+
+        return outList;
     }
 
     public interface EndOfMapReachedListener {
