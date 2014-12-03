@@ -74,7 +74,7 @@ public class LevelSelectionScreen extends AbstractScreen {
         table.add().padBottom(50).row();
 
         // Titel
-        Label titleLabel = new Label("tbn", skin, "digital7-92", Color.WHITE);
+        Label titleLabel = new Label("tbn", skin, "magneto-92", Color.WHITE);
         table.add(titleLabel).spaceBottom(5).align(1);
         table.row();
 

@@ -30,8 +30,8 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     public GameScreen(Jalf jalf, Map map) {
         super(jalf);
         this.map = map;
-        this.timeLabel = new Label("", skin, "arial", Color.WHITE);
-        this.livesLabel = new Label("", skin, "arial", Color.WHITE);
+        this.timeLabel = new Label("", skin, "default-font", Color.WHITE);
+        this.livesLabel = new Label("", skin, "default-font", Color.WHITE);
 
         // Maprenderer initialisieren
         Gdx.app.log(LOG, "Loading " + (map.isDefault() ? "defaultmap " : "usermap ") + map.getName() + " from " + map.getPath());
@@ -124,12 +124,12 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     @Override
     public void mapEndReachedEventHandler() {
         // TODO: hier in das nächste Level, GameOverScreen oder ähnliches wechseln
-        jalf.setScreen(new LevelSelectionScreen(jalf));
+        jalf.setScreen(new GameOverScreen(jalf));
     }
 
     public void playerDead() {
         //TODO: Evtl. auf Observer-Pattern ändern
-        jalf.setScreen(new LevelSelectionScreen(jalf));
+        jalf.setScreen(new GameOverScreen(jalf));
     }
 
     public void addEntityToRenderLoop(AbstractEntity entity) {
