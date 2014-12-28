@@ -124,7 +124,7 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     @Override
     public void mapEndReachedEventHandler() {
         // TODO: hier in das nächste Level, GameOverScreen oder ähnliches wechseln
-        jalf.setScreen(new GameOverScreen(jalf));
+        jalf.setScreen(new LevelSelectionScreen(jalf));
     }
 
     public void playerDead() {
