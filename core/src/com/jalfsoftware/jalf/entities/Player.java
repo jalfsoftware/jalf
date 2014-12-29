@@ -39,6 +39,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
 
     @Override
     public void render(Batch batch) {
+
         super.render(batch);
         checkIfEndReached();
 
@@ -49,6 +50,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
             if (lives > 0) respawn();
             else gameScreen.playerDead();
         }
+
     }
 
     private void checkIfEndReached() {
