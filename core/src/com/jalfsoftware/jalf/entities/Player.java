@@ -26,12 +26,23 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
     private Vector2 spawnPosition;
     private int     lives;
 
+   /* private Animation StandAnimation,RunAnimation;
+    TextureRegion[] StandFrames, walkFrames;
+    TextureRegion currentFrame;
+    float stateTime; */
+
     public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lives, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
         super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
         this.lives = lives;
         spawnPosition = new Vector2(xPos, yPos);
     }
+/*
+    public void createAnimationTextureRegions() {
+
+        TextureRegion[][] tmp = TextureRegion.split(Texture, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);
+    }
+*/
 
     public void addListener(EndOfMapReachedListener listener) {
         listeners.add(listener);
