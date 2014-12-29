@@ -27,8 +27,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
     private int     lives;
 
    /* private Animation StandAnimation,RunAnimation;
-    TextureRegion[] StandFrames, walkFrames;
-    TextureRegion currentFrame;
+    TextureRegion[] StandFrames, walkFrames; +
     float stateTime; */
 
     public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lives, float acceleration, float maxSpeed, float jumpSpeed,
