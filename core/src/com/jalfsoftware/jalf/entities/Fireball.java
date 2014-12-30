@@ -8,7 +8,7 @@ public class Fireball extends AbstractProjectileEntity {
     private static float maxSpeed = 300;
 
     public Fireball(float xPos, float yPos, GameScreen gameScreen, Direction lastXDirection, float entityHeight) {
-        super(xPos, yPos, new Texture("feuerball.png"), gameScreen, maxSpeed, lastXDirection, entityHeight);
+        super(xPos, yPos, "Feuerball", gameScreen, maxSpeed, lastXDirection, entityHeight);
     }
 
 }
