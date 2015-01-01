@@ -53,6 +53,11 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
         }
     }
 
+    private void setCurrentAnimationSpeed(float frameDuration) {
+        currentAnimation.setFrameDuration(frameDuration);
+        Gdx.app.log(LOG, String.valueOf(frameDuration));
+    }
+
     @Override
     protected void move(Direction direction) {
         super.move(direction);
@@ -84,6 +89,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
         }
 
         timeSinceAnimationStart += Gdx.graphics.getDeltaTime();
+        if (currentAnimation == walkLefttAnimation || currentAnimation == walkRightAnimation) {
+            setCurrentAnimationSpeed(1 / Math.abs(currentSpeed.x));
+        }
         sprite.setRegion(currentAnimation.getKeyFrame(timeSinceAnimationStart, true));
     }
 
