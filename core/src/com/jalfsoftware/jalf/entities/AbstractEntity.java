@@ -16,7 +16,7 @@ public abstract class AbstractEntity {
 
 
     public AbstractEntity(float xPos, float yPos, String Regionname, GameScreen gameScreen) {
-        entityAtlas = new TextureAtlas(Gdx.files.internal("Konzepte/entities.atlas"));
+        entityAtlas = new TextureAtlas(Gdx.files.internal("atlases/entities.atlas"));
         TextureAtlas.AtlasRegion region = entityAtlas.findRegion(Regionname);
         /*
         if(region.index == -1)
