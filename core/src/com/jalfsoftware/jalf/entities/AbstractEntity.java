@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
         /*
         if(region.index == -1)
         { */
-            sprite = entityAtlas.createSprite(Regionname, -1);
+            sprite = entityAtlas.createSprite(Regionname);
             sprite.setPosition(xPos, yPos);
             sprite.setSize(region.getRegionWidth() * GameScreen.UNITSCALE, region.getRegionHeight() * GameScreen.UNITSCALE);
         /*
