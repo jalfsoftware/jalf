@@ -16,7 +16,7 @@ public class AbstractProjectileEntity extends AbstractEntity/* implements Poolab
     private float     i;
     public  boolean   alive;
 
-    public AbstractProjectileEntity(float xPos, float yPos, Texture texture, GameScreen gameScreen, float maxSpeed,
+    public AbstractProjectileEntity(float xPos, float yPos, String texture, GameScreen gameScreen, float maxSpeed,
                                     Direction lastXDirection, float entityHeight) {
         super(xPos, yPos, texture, gameScreen);
         this.xPos = xPos;

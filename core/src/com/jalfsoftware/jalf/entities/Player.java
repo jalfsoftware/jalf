@@ -3,11 +3,10 @@ package com.jalfsoftware.jalf.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Pool;
-import com.jalfsoftware.jalf.entities.AbstractLivingEntity.Direction;
 import com.jalfsoftware.jalf.helper.ItemJumpBoostThread;
 import com.jalfsoftware.jalf.helper.ItemSpeedBoostThread;
 import com.jalfsoftware.jalf.screens.GameScreen;
@@ -23,13 +22,22 @@ import java.util.List;
 public class Player extends AbstractLivingEntity implements InputProcessor, ConsoleManager.CommandableInstance {
     private List<EndOfMapReachedListener> listeners = new ArrayList<EndOfMapReachedListener>();
 
-    private Vector2 spawnPosition;
-    private int     lives;
+    private Vector2   spawnPosition;
+    private int       lives;
+    private Animation idleAnimation;
+    private Animation walkRightAnimation;
+    private Animation walkLefttAnimation;
 
     public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lives, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
-        super(xPos, yPos, new Texture("player.png"), currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
+        super(xPos, yPos, "jalf_Stand", currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
         this.lives = lives;
+
+        // Animationen definieren
+        idleAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_Stand"));
+        walkRightAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_right"));
+        walkLefttAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_left"));
+        setCurrentAnimation(idleAnimation);
         spawnPosition = new Vector2(xPos, yPos);
     }
 
@@ -38,7 +46,24 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
     }
 
     @Override
+    protected void move(Direction direction) {
+        super.move(direction);
+        switch (direction) {
+            case LEFT:
+                setCurrentAnimation(walkLefttAnimation);
+                break;
+            case RIGHT:
+                setCurrentAnimation(walkRightAnimation);
+                break;
+            case NONE:
+                setCurrentAnimation(idleAnimation);
+                break;
+        }
+    }
+
+    @Override
     public void render(Batch batch) {
+
         super.render(batch);
         checkIfEndReached();
 
@@ -49,6 +74,12 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
             if (lives > 0) respawn();
             else gameScreen.playerDead();
         }
+
+        // Animation updaten
+        if (getCurrentAnimation() == walkLefttAnimation || getCurrentAnimation() == walkRightAnimation) {
+            setCurrentAnimationSpeed(1 / Math.abs(currentSpeed.x));
+        }
+        updateSpriteAnimationFrame();
     }
 
     private void checkIfEndReached() {

@@ -33,9 +33,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
     private boolean             entityIsOnLadder;
     private boolean             entityIsMidAir;
 
-    public AbstractLivingEntity(float xPos, float yPos, Texture texture, int currentHealth, int maxHealth, float acceleration,
+    public AbstractLivingEntity(float xPos, float yPos, String Regionname, int currentHealth, int maxHealth, float acceleration,
                                 float maxSpeed, float jumpSpeed, GameScreen gameScreen) {
-        super(xPos, yPos, texture, gameScreen);
+        super(xPos, yPos, Regionname, gameScreen);
         this.maxHealth = maxHealth;
         this.currentHealth = currentHealth;
 
