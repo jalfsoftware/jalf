@@ -12,12 +12,12 @@ import com.jalfsoftware.jalf.screens.GameScreen;
 public abstract class AbstractEntity {
     protected final Sprite     sprite;
     protected final GameScreen gameScreen;
-    protected static final TextureAtlas entityAtlas = new TextureAtlas(Gdx.files.internal("atlases/entities.atlas"));
+    protected static final TextureAtlas ENTITY_ATLAS = new TextureAtlas(Gdx.files.internal("atlases/entities.atlas"));
 
 
     public AbstractEntity(float xPos, float yPos, String Regionname, GameScreen gameScreen) {
-        TextureAtlas.AtlasRegion region = entityAtlas.findRegion(Regionname);
-        sprite = entityAtlas.createSprite(Regionname);
+        TextureAtlas.AtlasRegion region = ENTITY_ATLAS.findRegion(Regionname);
+        sprite = ENTITY_ATLAS.createSprite(Regionname);
         sprite.setPosition(xPos, yPos);
         sprite.setSize(region.getRegionWidth() * GameScreen.UNITSCALE, region.getRegionHeight() * GameScreen.UNITSCALE);
         this.gameScreen = gameScreen;
