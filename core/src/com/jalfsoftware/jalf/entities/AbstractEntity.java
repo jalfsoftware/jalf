@@ -12,34 +12,14 @@ import com.jalfsoftware.jalf.screens.GameScreen;
 public abstract class AbstractEntity {
     protected final Sprite     sprite;
     protected final GameScreen gameScreen;
-    static TextureAtlas entityAtlas;
+    protected static final TextureAtlas entityAtlas = new TextureAtlas(Gdx.files.internal("atlases/entities.atlas"));
 
 
     public AbstractEntity(float xPos, float yPos, String Regionname, GameScreen gameScreen) {
-        entityAtlas = new TextureAtlas(Gdx.files.internal("atlases/entities.atlas"));
         TextureAtlas.AtlasRegion region = entityAtlas.findRegion(Regionname);
-        /*
-        if(region.index == -1)
-        { */
-            sprite = entityAtlas.createSprite(Regionname);
-            sprite.setPosition(xPos, yPos);
-            sprite.setSize(region.getRegionWidth() * GameScreen.UNITSCALE, region.getRegionHeight() * GameScreen.UNITSCALE);
-        /*
-        }
-        else
-        {
-           Animation standAnimation;
-            TextureRegion[][] tmp = region.split(32,32);
-            int index = 0;
-            for (int i = 0; i < region.index; i++) {
-                for (int j = 0; j < ; j++) {
-                    walkFrames[index++] = tmp[i][j];
-                }
-            }
-            standAnimation = new Animation(0.025f, region);
-            spriteBatch = new SpriteBatch();
-        } */
-
+        sprite = entityAtlas.createSprite(Regionname);
+        sprite.setPosition(xPos, yPos);
+        sprite.setSize(region.getRegionWidth() * GameScreen.UNITSCALE, region.getRegionHeight() * GameScreen.UNITSCALE);
         this.gameScreen = gameScreen;
     }
 
