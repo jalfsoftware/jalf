@@ -27,14 +27,13 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
     private Animation idleAnimation;
     private Animation walkRightAnimation;
     private Animation walkLefttAnimation;
-    private Animation currentAnimation;
-    private float     timeSinceAnimationStart;
-
 
     public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lives, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
         super(xPos, yPos, "jalf_Stand", currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
         this.lives = lives;
+
+        // Animationen definieren
         idleAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_Stand"));
         walkRightAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_right"));
         walkLefttAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_left"));
@@ -44,18 +43,6 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
 
     public void addListener(EndOfMapReachedListener listener) {
         listeners.add(listener);
-    }
-
-    private void setCurrentAnimation(Animation animation) {
-        if (currentAnimation != animation) {
-            currentAnimation = animation;
-            timeSinceAnimationStart = 0;
-        }
-    }
-
-    private void setCurrentAnimationSpeed(float frameDuration) {
-        currentAnimation.setFrameDuration(frameDuration);
-        Gdx.app.log(LOG, String.valueOf(frameDuration));
     }
 
     @Override
@@ -88,11 +75,11 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
             else gameScreen.playerDead();
         }
 
-        timeSinceAnimationStart += Gdx.graphics.getDeltaTime();
-        if (currentAnimation == walkLefttAnimation || currentAnimation == walkRightAnimation) {
+        // Animation updaten
+        if (getCurrentAnimation() == walkLefttAnimation || getCurrentAnimation() == walkRightAnimation) {
             setCurrentAnimationSpeed(1 / Math.abs(currentSpeed.x));
         }
-        sprite.setRegion(currentAnimation.getKeyFrame(timeSinceAnimationStart, true));
+        updateSpriteAnimationFrame();
     }
 
     private void checkIfEndReached() {

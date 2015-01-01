@@ -14,6 +14,9 @@ public abstract class AbstractEntity {
     protected final GameScreen gameScreen;
     protected static final TextureAtlas ENTITY_ATLAS = new TextureAtlas(Gdx.files.internal("atlases/entities.atlas"));
 
+    private Animation currentAnimation;
+    private float     timeSinceAnimationStart;
+
 
     public AbstractEntity(float xPos, float yPos, String Regionname, GameScreen gameScreen) {
         TextureAtlas.AtlasRegion region = ENTITY_ATLAS.findRegion(Regionname);
@@ -23,8 +26,28 @@ public abstract class AbstractEntity {
         this.gameScreen = gameScreen;
     }
 
+    public Animation getCurrentAnimation() {
+        return currentAnimation;
+    }
+
+    protected void setCurrentAnimation(Animation animation) {
+        if (currentAnimation != animation) {
+            currentAnimation = animation;
+            timeSinceAnimationStart = 0;
+        }
+    }
+
+    protected void setCurrentAnimationSpeed(float frameDuration) {
+        currentAnimation.setFrameDuration(frameDuration);
+    }
+
+    protected void updateSpriteAnimationFrame() {
+        sprite.setRegion(currentAnimation.getKeyFrame(timeSinceAnimationStart, true));
+    }
+
     public void render(Batch batch) {
         sprite.draw(batch);
+        if (currentAnimation != null) timeSinceAnimationStart += Gdx.graphics.getDeltaTime();
     }
 
     protected void setPosition(float x, float y) {
