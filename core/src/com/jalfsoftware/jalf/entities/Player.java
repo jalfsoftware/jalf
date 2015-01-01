@@ -25,6 +25,9 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
     private Vector2   spawnPosition;
     private int       lives;
     private Animation idleAnimation;
+    private Animation walkRightAnimation;
+    private Animation walkLefttAnimation;
+    private Animation currentAnimation;
     private float     timeSinceAnimationStart;
 
 
@@ -33,11 +36,37 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
         super(xPos, yPos, "jalf_Stand", currentHealth, maxHealth, acceleration, maxSpeed, jumpSpeed, gameScreen);
         this.lives = lives;
         idleAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_Stand"));
+        walkRightAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_right"));
+        walkLefttAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_left"));
+        setCurrentAnimation(idleAnimation);
         spawnPosition = new Vector2(xPos, yPos);
     }
 
     public void addListener(EndOfMapReachedListener listener) {
         listeners.add(listener);
+    }
+
+    private void setCurrentAnimation(Animation animation) {
+        if (currentAnimation != animation) {
+            currentAnimation = animation;
+            timeSinceAnimationStart = 0;
+        }
+    }
+
+    @Override
+    protected void move(Direction direction) {
+        super.move(direction);
+        switch (direction) {
+            case LEFT:
+                setCurrentAnimation(walkLefttAnimation);
+                break;
+            case RIGHT:
+                setCurrentAnimation(walkRightAnimation);
+                break;
+            case NONE:
+                setCurrentAnimation(idleAnimation);
+                break;
+        }
     }
 
     @Override
@@ -55,8 +84,7 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
         }
 
         timeSinceAnimationStart += Gdx.graphics.getDeltaTime();
-        sprite.setRegion(idleAnimation.getKeyFrame(timeSinceAnimationStart, true));
-
+        sprite.setRegion(currentAnimation.getKeyFrame(timeSinceAnimationStart, true));
     }
 
     private void checkIfEndReached() {
