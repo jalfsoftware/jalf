@@ -1,5 +1,5 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: ComicStandardtext16.fnt } },
+com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: CooperBlackStandardtext18.fnt } },
 com.badlogic.gdx.graphics.g2d.BitmapFont: { ingame-font: { file: Stencil32.fnt } },
 com.badlogic.gdx.graphics.g2d.BitmapFont: { Subtitle: { file: Magneto32_.fnt } },
 com.badlogic.gdx.graphics.g2d.BitmapFont: { Title: { file: Stencil64.fnt } },
