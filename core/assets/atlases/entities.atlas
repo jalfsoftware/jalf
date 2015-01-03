@@ -1,180 +1,299 @@
 
 entities.png
-size: 1024,64
+size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Feuerball
   rotate: false
-  xy: 2, 2
+  xy: 2, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Feuerball2
   rotate: false
-  xy: 36, 2
+  xy: 2, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Herz1
+Herz
   rotate: false
-  xy: 70, 2
+  xy: 36, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
-Herz7
+  index: 1
+Herz
   rotate: false
-  xy: 70, 2
+  xy: 2, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
-Herz2
+  index: 2
+Herz
   rotate: false
-  xy: 104, 2
+  xy: 36, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
-Herz6
+  index: 3
+Herz
   rotate: false
-  xy: 104, 2
+  xy: 70, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
-Herz3
-  rotate: false
-  xy: 138, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Herz5
-  rotate: false
-  xy: 138, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Herz4
-  rotate: false
-  xy: 172, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
+  index: 4
 jalf_Stand
   rotate: false
-  xy: 206, 2
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 jalf_Stand
   rotate: false
-  xy: 240, 2
+  xy: 70, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 jalf_Stand
   rotate: false
-  xy: 274, 2
+  xy: 104, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
+jalf_run
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+jalf_run
+  rotate: false
+  xy: 104, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+jalf_run
+  rotate: false
+  xy: 138, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+jalf_run
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+jalf_run
+  rotate: false
+  xy: 138, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+jalf_run
+  rotate: false
+  xy: 172, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+jalf_run
+  rotate: false
+  xy: 172, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+jalf_run
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+jalf_run
+  rotate: false
+  xy: 172, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+jalf_run
+  rotate: false
+  xy: 206, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 9
+jalf_run
+  rotate: false
+  xy: 172, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 10
+jalf_run
+  rotate: false
+  xy: 206, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 11
+jalf_run
+  rotate: false
+  xy: 240, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 12
+jalf_run
+  rotate: false
+  xy: 206, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 13
+jalf_run
+  rotate: false
+  xy: 240, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 14
+jalf_run
+  rotate: false
+  xy: 274, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 15
+jalf_run
+  rotate: false
+  xy: 240, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 16
+jalf_run
+  rotate: false
+  xy: 274, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 17
+jalf_run
+  rotate: false
+  xy: 308, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 18
+jalf_run
+  rotate: false
+  xy: 274, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 19
+jalf_run_left
+  rotate: false
+  xy: 308, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+jalf_run_left
+  rotate: false
+  xy: 342, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
 jalf_run_left
   rotate: false
   xy: 308, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: 3
 jalf_run_left
+  rotate: false
+  xy: 342, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+jalf_run_left
+  rotate: false
+  xy: 376, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+jalf_run_right
   rotate: false
   xy: 342, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
+  index: 1
+jalf_run_right
+  rotate: false
+  xy: 376, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
   index: 2
-jalf_run_left
+jalf_run_right
+  rotate: false
+  xy: 410, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+jalf_run_right
   rotate: false
   xy: 376, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
-jalf_run_left
-  rotate: false
-  xy: 410, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
   index: 4
-jalf_run_left
+jalf_run_right
   rotate: false
-  xy: 444, 2
+  xy: 410, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 jalf_run_right
   rotate: false
-  xy: 478, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-jalf_run_right
-  rotate: false
-  xy: 512, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-jalf_run_right
-  rotate: false
-  xy: 546, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-jalf_run_right
-  rotate: false
-  xy: 580, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-jalf_run_right
-  rotate: false
-  xy: 614, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-jalf_run_right
-  rotate: false
-  xy: 648, 2
+  xy: 444, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 jalf_run_right
   rotate: false
-  xy: 682, 2
+  xy: 478, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 jalf_run_right
   rotate: false
-  xy: 716, 2
+  xy: 410, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
