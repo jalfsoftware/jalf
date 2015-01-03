@@ -25,8 +25,8 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
     private Vector2   spawnPosition;
     private int       lives;
     private Animation idleAnimation;
-    private Animation walkRightAnimation;
-    private Animation walkLefttAnimation;
+    private Animation walkAnimation;
+    private Animation walkLeftAnimation;
 
     public Player(float xPos, float yPos, int currentHealth, int maxHealth, int lives, float acceleration, float maxSpeed, float jumpSpeed,
                   GameScreen gameScreen) {
@@ -35,8 +35,8 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
 
         // Animationen definieren
         idleAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_Stand"));
-        walkRightAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_right"));
-        walkLefttAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run_left"));
+        walkLeftAnimation = new Animation(0.20f, ENTITY_ATLAS.findRegions("jalf_run"));
+        walkAnimation = new Animation(0.01f, ENTITY_ATLAS.findRegions("jalf_run"));
         setCurrentAnimation(idleAnimation);
         spawnPosition = new Vector2(xPos, yPos);
     }
@@ -50,10 +50,10 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
         super.move(direction);
         switch (direction) {
             case LEFT:
-                setCurrentAnimation(walkLefttAnimation);
+                setCurrentAnimation(walkLeftAnimation);
                 break;
             case RIGHT:
-                setCurrentAnimation(walkRightAnimation);
+                setCurrentAnimation(walkAnimation);
                 break;
             case NONE:
                 setCurrentAnimation(idleAnimation);
@@ -64,6 +64,10 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
     @Override
     public void render(Batch batch) {
 
+        //Spiegeln beim nach links laufen
+        if (getCurrentAnimation() == walkLeftAnimation) {
+            sprite.flip(true,false);
+        }
         super.render(batch);
         checkIfEndReached();
 
@@ -76,8 +80,8 @@ public class Player extends AbstractLivingEntity implements InputProcessor, Cons
         }
 
         // Animation updaten
-        if (getCurrentAnimation() == walkLefttAnimation || getCurrentAnimation() == walkRightAnimation) {
-            setCurrentAnimationSpeed(1 / Math.abs(currentSpeed.x));
+        if (getCurrentAnimation() == walkLeftAnimation || getCurrentAnimation() == walkAnimation) {
+            setCurrentAnimationSpeed(1 / Math.abs(currentSpeed.x)/20);
         }
         updateSpriteAnimationFrame();
     }
