@@ -30,8 +30,8 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     public GameScreen(Jalf jalf, Map map) {
         super(jalf);
         this.map = map;
-        this.timeLabel = new Label("", skin, "ingame-font", Color.RED);
-        this.livesLabel = new Label("", skin, "ingame-font", Color.RED);
+        this.timeLabel = new Label("", skin, "ingame-font", Color.BLACK);
+        this.livesLabel = new Label("", skin, "ingame-font", Color.BLACK);
 
         // Maprenderer initialisieren
         Gdx.app.log(LOG, "Loading " + (map.isDefault() ? "defaultmap " : "usermap ") + map.getName() + " from " + map.getPath());
