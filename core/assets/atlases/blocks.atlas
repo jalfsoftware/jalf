@@ -172,58 +172,65 @@ grey
   orig: 32, 32
   offset: 0, 0
   index: -1
-groundrocks1
+ground
   rotate: false
   xy: 240, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-groundsand
+groundrocks1
   rotate: false
   xy: 274, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-ladder1
+groundsand
   rotate: false
   xy: 308, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-ladder2
+ladder1
   rotate: false
   xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-rocks1
+ladder2
   rotate: false
   xy: 308, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-snowground1
+rocks1
   rotate: false
   xy: 342, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-snowrocks1
+snowground1
   rotate: false
   xy: 308, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-white
+snowrocks1
   rotate: false
   xy: 342, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 376, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
