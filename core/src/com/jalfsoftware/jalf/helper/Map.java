@@ -11,6 +11,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.jalfsoftware.jalf.entities.Enemyredstickman001;
+import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.screens.GameScreen;
 
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ public class Map {
     // Felder für nach dem Laden
     private Vector2                    spawnPosition;
     private List<Vector2>              endPositions;
-    private List<Vector2>              mobSpawnPositions;
+    private ArrayList<Vector2> mobSpawnPositions;
     private TiledMap                   map;
     private OrthogonalTiledMapRenderer renderer;
     private TiledMapTileLayer          collisionLayer;
@@ -44,6 +47,7 @@ public class Map {
     private static final String OBJECT_LAYER_NAME              = "ojLayer";
     private static final String MAP_OBJECT_TILE_REFERENCE_NAME = "gid";
     private static final String TILE_PLAYER_SPAWN_KEY          = "playerSpawn";
+    private static final String TILE_ENEMY_SPAWN_KEY           = "enemySpawn";
     private static final String TILE_MAP_END_KEY               = "mapEnd";
     private static final String TILE_MAP_ITEM                  = "item";
 
@@ -93,6 +97,9 @@ public class Map {
                 } else if (tileProperties.containsKey(TILE_MAP_END_KEY)) {
                     endPositions.add(new Vector2(((RectangleMapObject) object).getRectangle().getX(),
                                                  ((RectangleMapObject) object).getRectangle().getY()));
+                } else if (tileProperties.containsKey(TILE_ENEMY_SPAWN_KEY)) {
+                    mobSpawnPositions.add(new Vector2(((RectangleMapObject) object).getRectangle().getX(),
+                            ((RectangleMapObject) object).getRectangle().getY()));
                 }
             }
         }
@@ -249,4 +256,5 @@ public class Map {
     public TiledMapTileLayer getForegroudLayer() {
         return foregroundLayer;
     }
+
 }

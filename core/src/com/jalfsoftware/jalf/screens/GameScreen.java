@@ -3,6 +3,8 @@ package com.jalfsoftware.jalf.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
@@ -47,8 +49,9 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         // Gegnerliste initialisieren
         entityList = new ArrayList<AbstractEntity>();
-        entityList.add(new Enemyredstickman001(5 * UNITSCALE, 5 * UNITSCALE, this));
-
+        for(Vector2 spawn:map.getMobSpawnPositions()){
+            entityList.add(new Enemyredstickman001(spawn.x * UNITSCALE, spawn.y * UNITSCALE, this));
+        }
         // Poolable Entity List
         poolableEntityList = new ArrayList<AbstractEntity>();
 
