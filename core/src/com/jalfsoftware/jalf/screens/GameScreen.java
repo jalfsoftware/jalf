@@ -30,8 +30,8 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     public GameScreen(Jalf jalf, Map map) {
         super(jalf);
         this.map = map;
-        this.timeLabel = new Label("", skin, "default-font", Color.WHITE);
-        this.livesLabel = new Label("", skin, "default-font", Color.WHITE);
+        this.timeLabel = new Label("", skin, "ingame-font", Color.BLACK);
+        this.livesLabel = new Label("", skin, "ingame-font", Color.BLACK);
 
         // Maprenderer initialisieren
         Gdx.app.log(LOG, "Loading " + (map.isDefault() ? "defaultmap " : "usermap ") + map.getName() + " from " + map.getPath());
@@ -76,10 +76,10 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
     @Override
     public void preUIrender(float delta) {
         // Game-Labels updaten
-        timeLabel.setText("Time: " + String.valueOf((System.currentTimeMillis() - startTime) / 1000));
+        timeLabel.setText("TIME: " + String.valueOf((System.currentTimeMillis() - startTime) / 1000));
         timeLabel.setPosition(0, uiStage.getHeight() - timeLabel.getPrefHeight() / 2);
 
-        livesLabel.setText("Lives: " + String.valueOf(player.getLives()));
+        livesLabel.setText("LIVES: " + String.valueOf(player.getLives()));
         livesLabel.setPosition((uiStage.getWidth() / 2) - (livesLabel.getPrefWidth() / 2),
                                uiStage.getHeight() - timeLabel.getPrefHeight() / 2);
 

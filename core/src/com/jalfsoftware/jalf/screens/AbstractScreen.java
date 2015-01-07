@@ -54,7 +54,7 @@ public abstract class AbstractScreen implements Screen {
         });
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         batch = new SpriteBatch();
-        this.fpsLabel = new Label("", skin, "arial", Color.WHITE);
+        this.fpsLabel = new Label("", skin, "ingame-font", Color.BLACK);
 
         // Inputs festlegen
         inputMultiplexer = new InputMultiplexer(uiStage);

@@ -35,13 +35,15 @@ public class OptionsScreen extends AbstractScreen {
         table.add().padBottom(50).row();
 
         // Titel
-        Label titleLabel = new Label("tbn", skin, "magneto-92", Color.WHITE);
+        Label titleLabel = new Label("THE ULTIMATE JALF", skin, "Title", Color.GREEN);
         table.add(titleLabel).spaceBottom(5).align(1);
         table.row();
 
         // Untertitel
-        table.add("OPTIONS").align(1).spaceBottom(20);
+        Label subtitleLabel = new Label("Option Menue",skin, "Subtitle", Color.BLUE);
+        table.add(subtitleLabel).spaceBottom(10);
         table.row();
+
 
         // FPS-Counter-Checkbox
         final CheckBox fpsCounterCheckbox = new CheckBox("FPS-Counter", skin);
@@ -70,7 +72,7 @@ public class OptionsScreen extends AbstractScreen {
         table.row();
 
         // Footer
-        table.add(new Label("www.jalfsoftware.com", skin)).row();
+        table.add(new Label("www.jalfsoftware.com", skin, "Subtitle", Color.DARK_GRAY)).row();
         table.add().padBottom(25).row();
 
         Gdx.input.setInputProcessor(uiStage);
