@@ -436,4 +436,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         DOWN,
         NONE
     }
+
+    public Vector2 getPosition(){
+        return new Vector2(sprite.getX(), sprite.getY());
+    }
 }
