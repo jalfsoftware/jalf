@@ -11,9 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.jalfsoftware.jalf.entities.Enemyredstickman001;
-import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.screens.GameScreen;
 
 import java.util.ArrayList;
