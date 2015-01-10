@@ -22,9 +22,6 @@ public class Enemyredstickman001 extends AbstractLivingEntity{
     @Override
     public void render(Batch batch){
         super.render(batch);
-        // float enemyPositionX = getX();
-        // float enemyPositionY = getY();
-        // Gdx.app.log(LOG, "Position X: " + String.valueOf(enemyPositionX) +  "Position Y: " + String.valueOf(enemyPositionY));
 
         switch (lastXDirection) {
             case LEFT:
@@ -40,7 +37,9 @@ public class Enemyredstickman001 extends AbstractLivingEntity{
                 }
                 break;
             case NONE:
-                move(Direction.RIGHT);
+                if(currentSpeed.x  == 0 ) {
+                    move(Direction.RIGHT);
+                }
                 break;
         }
     }

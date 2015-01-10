@@ -3,9 +3,9 @@ package com.jalfsoftware.jalf.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.jalfsoftware.jalf.Jalf;
 import com.jalfsoftware.jalf.entities.AbstractEntity;
@@ -13,6 +13,7 @@ import com.jalfsoftware.jalf.entities.Enemyredstickman001;
 import com.jalfsoftware.jalf.entities.Player;
 import com.jalfsoftware.jalf.helper.Map;
 import com.jalfsoftware.jalf.services.ConsoleManager;
+import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,59 +116,24 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         // Spieler rendern
         player.render(renderer.getSpriteBatch());
 
-        // Gegner rendern
         for(AbstractEntity enemy : entityList){
+            // Position des Players:
             float playerWidthPosXLeft = player.getX();
-            float playerWidthPosXRight = player.getX() + player.getEntityWidth();
             float playerHeightPosLeft = player.getY();
-            float playerHeightPosRight = player.getY() + player.getEntityHeight();
+            // Position des Gegners:
             float enemyWidthPosXLeft = enemy.getX();
-            float enemyWidthPosXRight = enemy.getX()+ enemy.getWidth();
             float enemyHeightPosYLeft = enemy.getY();
-            float enemyHeightPosYRight = enemy.getY()+ enemy.getHeight();
+            // Initialisierung der Spieler-Box und Gegner-Box
             PlayerBox = new Rectangle(playerWidthPosXLeft, playerHeightPosLeft, player.getWidth(), player.getHeight());
             EnemyBox = new Rectangle (enemyWidthPosXLeft, enemyHeightPosYLeft, enemy.getWidth(), enemy.getHeight());
-            enemy.render(renderer.getSpriteBatch());
-            // Gdx.app.log(LOG, "Enemy PositionXLeft: " + enemyWidthPosXLeft);
-            // Gdx.app.log(LOG, "Enemy PositionXRight: " + enemyWidthPosXRight);
-            // Gdx.app.log(LOG, "Enemy PositionYLeft: " + enemyHeightPosYLeft);
-            // Gdx.app.log(LOG, "Enemy PositionYRight: " + enemyHeightPosYRight);
-            // Gdx.app.log(LOG, "Enemy PositionEntityWidth: " + enemy.getWidth());
-            // Gdx.app.log(LOG, "Enemy PositionEntityHeight: " + enemy.getHeight());
-            // Gdx.app.log(LOG, "Player Position: " + playerCenterPos);
-            // Gdx.app.log(LOG, "Player PositionXLeft: " + playerWidthPosXLeft);
-            // Gdx.app.log(LOG, "Player PositionXRight: " + playerWidthPosXRight);
-            // Gdx.app.log(LOG, "Player PositionYLeft: " + playerHeightPosLeft);
-            // Gdx.app.log(LOG, "Player PositionYRight: " + playerHeightPosRight);
-            // Gdx.app.log(LOG, "Player PositionEntityWidth: " + player.getWidth());
-            // Gdx.app.log(LOG, "Player PositionEntityHeight: " + player.getHeight());
-            if(overlaps(PlayerBox, EnemyBox)){
-                Gdx.app.log(LOG, "Box überschnitten");
-                player.takeDamage(1);
-            }
-            // if(PlayerBox == EnemyBox){
 
-            //    Gdx.app.log(LOG, "Box überschnitten");
-            //}
+            // Gegner rendern
+            enemy.render(renderer.getSpriteBatch());
+
+            // Kollisionsfunktion zwischen dem Spieler und Gegnern
+            BoxCollides(PlayerBox, EnemyBox);
 
         }
-
-            // if(enemyWidthPosXLeft == playerWidthPosXLeft){
-            //    Gdx.app.log(LOG, "Position X Left gleich!");
-            // }
-            // else if(enemyWidthPosXLeft != playerWidthPosXLeft){
-
-//                 Gdx.app.log(LOG, "Position X ungleich!");
-//             }
-//            if(enemyHeightPosYLeft == playerHeightPosLeft){
-//
-//                 Gdx.app.log(LOG, "Position Y gleich!");
-//             }
-//             else if(enemyHeightPosYLeft != playerHeightPosLeft){
-
-//                 Gdx.app.log(LOG, "Position Y ungleich!");
-//             }
-//         }
 
         //Entitys rendern
         for (AbstractEntity entity : poolableEntityList)
@@ -175,6 +141,32 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
         renderer.getSpriteBatch().end();
     }
+
+    private void BoxCollides(Rectangle playerBox, Rectangle enemyBox) {
+        if(overlaps(playerBox, enemyBox)){
+            Rectangle r1 = playerBox;
+            Rectangle r2 = enemyBox;
+            Rectangle intersection = new Rectangle();
+            Intersector.intersectRectangles(r1, r2, intersection);
+            //Player intersects with bottom side
+            if(intersection.y + intersection.height < r1.y + r1.height){
+
+            }
+            // Player intersects with right side
+            else if(intersection.x > r1.x){
+                player.takeDamage(1);
+            }
+            // Player intersects with top side
+            else if(intersection.y > r1.y){
+                player.takeDamage(1);
+            }
+            // Player intersects with left side
+            else if(intersection.x + intersection.width < r1.x + r1.width){
+                player.takeDamage(1);
+            }
+        }
+    }
+
 
     public Map getMap() {
         return map;
