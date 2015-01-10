@@ -59,6 +59,6 @@
  <objectgroup name="ojLayer">
   <object gid="65" x="160" y="416"/>
   <object gid="66" x="832" y="32"/>
-  <object gid="67" x="-2" y="320"/>
+  <object gid="67" x="43" y="413"/>
  </objectgroup>
 </map>
