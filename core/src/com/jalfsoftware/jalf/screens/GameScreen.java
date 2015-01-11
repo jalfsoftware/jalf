@@ -45,8 +45,6 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
         // Maprenderer initialisieren
         Gdx.app.log(LOG, "Loading " + (map.isDefault() ? "defaultmap " : "usermap ") + map.getName() + " from " + map.getPath());
         boolean mapIsValid = map.loadMap();
-        // TODO: rausspringen, wenn Map nicht korrekt aufgebaut
-
 
         // Spieler initialisieren
         player = new Player(map.getSpawnPosition().x * UNITSCALE, map.getSpawnPosition().y * UNITSCALE, 10, 10, 3, 15, 3, 5, this);
@@ -179,12 +177,10 @@ public class GameScreen extends AbstractScreen implements Player.EndOfMapReached
 
     @Override
     public void mapEndReachedEventHandler() {
-        // TODO: hier in das nächste Level, GameOverScreen oder ähnliches wechseln
         jalf.setScreen(new LevelSelectionScreen(jalf));
     }
 
     public void playerDead() {
-        //TODO: Evtl. auf Observer-Pattern ändern
         jalf.setScreen(new GameOverScreen(jalf));
     }
 
