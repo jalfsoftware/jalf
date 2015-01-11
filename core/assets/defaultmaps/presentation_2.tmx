@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <tileset firstgid="65" name="ojTileset" tilewidth="32" tileheight="32">
+  <image source="ojTileset.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="playerSpawn" value=""/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="mapEnd" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="enemySpawn" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="129" name="blocks" tilewidth="32" tileheight="32" spacing="2" margin="2">
+  <image source="../atlases/blocks.png" width="1024" height="64"/>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value=""/>
+    <property name="mud" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value=""/>
+    <property name="mud" value=""/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value=""/>
+    <property name="mud" value=""/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="ladder" value=""/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="ladder" value=""/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value=""/>
+    <property name="ice" value=""/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value=""/>
+    <property name="ice" value=""/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="item" value="coin"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="item" value="coin"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="item" value="fireball"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="item" value="hp"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="item" value="jump"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="item" value="jump"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="item" value="live"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="item" value="speed"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="item" value="speed"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="bgLayer" width="150" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2LsOgCAMQFF+nVFY/WBXQrRiann1DmdxEcNNIcYQQiycDeKPer8P/bXssdU+e+kpCUavzZK2J2aOzGtXWqufZ9Zrpyufet0BjsLob0Yfq85aAPvJE6wB+6ErSLLC6LVjXnQFCzQCC3VX0lyiQbQqW3k78zgL0Upzp6IrPKErzIauIKlnUrp5xv8GfEVXgB8XsG/ytw==
+  </data>
+ </layer>
+ <layer name="mgLayer" width="150" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztmN0KwyAMRn32lV3sp3Rs7H2HUEEyq1YTTTQHvqu2NLEHqxozJ/c9LbllRJFNL69qrmPQoudvg3dwRbJXW20hhNjaWo8rJyR7xRn1qu/6avNCvb4KzW9UvatXdP0vGff4Xo2EetW3f/WKB7beF0Jcz5K8kvadpNUL/SiNMf29OoJjTWcYwasaeq+vRkW9ktW/FKBXn16FZBLzqvafqODhvHoU5AnSqt6UVyHgNfWKllKvrEdwj5XiDVJab8yrGDHnKND11f/ck0po754C3l/iF8b6KrQnVHBxXmGcCaU4eu6MX1hewTOsWhYz9/wE4eAV9CvmGOb5FaZX655cRneQk1d+rgcJnZtT/8cWgz8fjT6/cfUqN1K9WifICF5hBuKPFRaXCWLH8gfXEk4+
+  </data>
+ </layer>
+ <layer name="fgLayer" width="150" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2jEKgDAQBMB7vf4gCAbfqhaCpFI0icIMHBzb5IotEwH8XbqZwxV6RQ17f6Yiy9G+V3Pj9wB4bul9AAAAdDJsMxb7OQMAAIAvSuGPCe87epV7HwJUtwLyZAwN
+  </data>
+ </layer>
+ <objectgroup name="ojLayer">
+  <object gid="65" x="64.3333" y="380.083"/>
+  <object gid="67" x="3230.67" y="562.667"/>
+  <object gid="67" x="4586.67" y="518"/>
+  <object gid="66" x="4768" y="57.3333"/>
+  <object gid="67" x="3375" y="523"/>
+  <object gid="67" x="3598" y="533"/>
+  <object gid="67" x="3751" y="525"/>
+  <object gid="67" x="3884" y="533"/>
+  <object gid="67" x="4102" y="526"/>
+  <object gid="67" x="4262" y="528"/>
+  <object gid="67" x="4420" y="514"/>
+  <object gid="67" x="1614" y="505"/>
+  <object gid="67" x="838" y="405"/>
+ </objectgroup>
+</map>
