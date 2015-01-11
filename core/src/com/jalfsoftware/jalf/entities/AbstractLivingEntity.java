@@ -329,7 +329,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
             }
         }
     }
-    
+
 
     protected abstract void itemCoinPlus();
 
@@ -421,6 +421,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         return currentSpeed;
     }
 
+    public Direction getRequestedDirection() {
+        return requestedDirection;
+    }
+
     public static enum Direction {
         LEFT,
         RIGHT,
@@ -431,5 +435,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
         UP,
         DOWN,
         NONE
+    }
+
+    public Vector2 getPosition(){
+        return new Vector2(sprite.getX(), sprite.getY());
     }
 }
