@@ -1,236 +1,215 @@
 
 blocks.png
-size: 512,128
+size: 1024,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-Trampolin
-  rotate: false
-  xy: 2, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Trampolin_hoch
-  rotate: false
-  xy: 2, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-Trampolin_hoch
-  rotate: false
-  xy: 36, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-Trampolin_hoch
+b_blue
   rotate: false
   xy: 2, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
-Trampolin_hoch
-  rotate: false
-  xy: 36, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-Trampolin_runter
-  rotate: false
-  xy: 70, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-Trampolin_runter
+  index: -1
+b_brown
   rotate: false
   xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 2
-Trampolin_runter
-  rotate: false
-  xy: 70, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-Trampolin_runter
-  rotate: false
-  xy: 104, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-Trampolin_runter
+  index: -1
+b_desert1
   rotate: false
   xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 5
-Wolke
-  rotate: false
-  xy: 104, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-Wolke
-  rotate: false
-  xy: 138, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-Wolke
+  index: -1
+b_dirtground1
   rotate: false
   xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
-Wolke
-  rotate: false
-  xy: 138, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-blue
-  rotate: false
-  xy: 172, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
   index: -1
-brown
+b_dirtrocks
   rotate: false
   xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-desert1
-  rotate: false
-  xy: 172, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-dirtground1
-  rotate: false
-  xy: 206, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-dirtrocks
+b_gras1
   rotate: false
   xy: 172, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-gras1
-  rotate: false
-  xy: 206, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-gras2
-  rotate: false
-  xy: 240, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-grasrocks
+b_gras2
   rotate: false
   xy: 206, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-green
-  rotate: false
-  xy: 240, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-grey
-  rotate: false
-  xy: 274, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ground
+b_grasrocks
   rotate: false
   xy: 240, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-groundrocks1
-  rotate: false
-  xy: 274, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-groundsand
-  rotate: false
-  xy: 308, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-ladder1
+b_green
   rotate: false
   xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-ladder2
-  rotate: false
-  xy: 308, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-rocks1
-  rotate: false
-  xy: 342, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-snowground1
+b_grey
   rotate: false
   xy: 308, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-snowrocks1
+b_ground
   rotate: false
-  xy: 342, 36
+  xy: 342, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-white
+b_groundrocks1
   rotate: false
-  xy: 376, 70
+  xy: 376, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_groundsand
+  rotate: false
+  xy: 410, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_ladder1
+  rotate: false
+  xy: 444, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_ladder2
+  rotate: false
+  xy: 478, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_rocks1
+  rotate: false
+  xy: 512, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_snowground1
+  rotate: false
+  xy: 546, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_snowrocks1
+  rotate: false
+  xy: 580, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_start1
+  rotate: false
+  xy: 614, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_white
+  rotate: false
+  xy: 648, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+b_ziel1
+  rotate: false
+  xy: 682, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_coin1
+  rotate: false
+  xy: 716, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_coin2
+  rotate: false
+  xy: 750, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_powerUp_Fireball
+  rotate: false
+  xy: 784, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_powerUp_HalfLife
+  rotate: false
+  xy: 818, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_powerUp_Jump
+  rotate: false
+  xy: 852, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_powerUp_Jump2
+  rotate: false
+  xy: 886, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_powerUp_Life
+  rotate: false
+  xy: 920, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_powerUp_Speed1
+  rotate: false
+  xy: 954, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+i_powerUp_Speed2
+  rotate: false
+  xy: 988, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
