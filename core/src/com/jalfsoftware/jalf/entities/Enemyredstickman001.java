@@ -15,8 +15,7 @@ public class Enemyredstickman001 extends AbstractLivingEntity{
     private CopyOnWriteArrayList EntityList;
 
     public Enemyredstickman001(float xPos, float yPos, GameScreen gameScreen) {
-        super(xPos, yPos, "jalf_Stand", 10, 10, 15, 3, 5, gameScreen);
-        //TODO: jonathan, Gegnertexture in Textureatlas, Zeile drüber Name ersetzen
+        super(xPos, yPos, "opponent", 10, 10, 15, 3, 5, gameScreen);
     }
 
     @Override
@@ -46,32 +45,26 @@ public class Enemyredstickman001 extends AbstractLivingEntity{
 
     @Override
     protected void itemCoinPlus() {
-        //TODO: Lukas???
     }
 
     @Override
     protected void itemSetFireballAvalible() {
-        //TODO: Lukas???
     }
 
     @Override
     protected void itemJumpBoost() {
-        //TODO: Lukas???
     }
 
     @Override
     protected void itemSpeedBoost() {
-        //TODO: Lukas???
     }
 
     @Override
     protected void itemLivePlus() {
-        //TODO: Lukas???
     }
 
     @Override
     protected void itemHpPlus() {
-        //TODO: Lukas???
     }
 }
 

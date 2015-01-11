@@ -298,3 +298,10 @@ jalf_run_right
   orig: 32, 32
   offset: 0, 0
   index: 8
+opponent
+  rotate: false
+  xy: 444, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
